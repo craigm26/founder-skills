@@ -47,6 +47,17 @@ cd plugins/build-options     && python3 -m pytest -q tests/
 
 ## Adding a new skill to this marketplace
 
+**Fastest — use the helper** (scaffolds the plugin, registers it in this marketplace *and* the RobotRegistryFoundation cross-list, symlinks it into `~/.claude/skills/`, and validates):
+
+```bash
+# import an existing skill from ~/.claude/skills/<name>, or scaffold a stub:
+scripts/add-skill.sh <name> --desc "one-line description with triggers"
+# other options: --from <dir>   --category <cat>   --no-cross-list
+```
+
+It prints the `git commit && push` commands to run for each repo (it never pushes for you). Re-running for an existing name is a no-op.
+
+**Manual equivalent:**
 1. Create `plugins/<name>/` with `SKILL.md` at its root (plus optional `assets/`, `references/`, `tests/`).
 2. Add `plugins/<name>/.claude-plugin/plugin.json` (`name`, `version`, `description`, `author`, `homepage`, `license: MIT`).
 3. Add an entry to `.claude-plugin/marketplace.json` with `"source": "./plugins/<name>"`.
