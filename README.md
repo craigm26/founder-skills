@@ -2,18 +2,19 @@
 
 Claude Code skills for founders and builders: **validate whether a market is real, then decide what to build** — with cited research and an auditable decision matrix.
 
-This repo is a [Claude Code plugin marketplace](https://docs.anthropic.com/en/docs/claude-code/plugins) hosting one plugin, **`founder-suite`**, which bundles two skills.
+This repo is a [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces) hosting two installable plugins.
 
 ## Install
 
 ```
 /plugin marketplace add craigm26/founder-skills
-/plugin install founder-suite@founder-skills
+/plugin install market-validation@founder-skills
+/plugin install build-options@founder-skills
 ```
 
-Then just talk to Claude Code naturally — the skills activate on intent (see triggers below).
+Install either one on its own, or both for the full validate → build chain. Then just talk to Claude Code naturally — the skills activate on intent.
 
-## What's inside
+## Plugins
 
 ### `market-validation`
 Validate whether there is a real market for a product idea, end to end:
@@ -33,21 +34,21 @@ market-validation  →  build-options  →  prd  →  tasks  →  build
    (is it real?)       (what to build)   (spec)  (plan)
 ```
 
-`prd` and `tasks` are separate skills; `founder-suite` covers the first two stages.
+`prd` and `tasks` are separate skills; this marketplace covers the first two stages.
 
 ## Worked example
 
-Both skills ship a worked example built around a **fictional** product, **ShiftMate** (a shift-swap marketplace for hourly workers), validated against the real, public shift-scheduling market. It's illustrative — see:
-- `skills/market-validation/references/example-shiftmate/`
-- `skills/build-options/references/example-shiftmate/decision-data.json`
+Both plugins ship a worked example built around a **fictional** product, **ShiftMate** (a shift-swap marketplace for hourly workers), validated against the real, public shift-scheduling market. It's illustrative — see:
+- `plugins/market-validation/references/example-shiftmate/`
+- `plugins/build-options/references/example-shiftmate/decision-data.json`
 
 ## Develop / test
 
-Each skill is self-contained with its own tests:
+Each plugin is self-contained with its own tests:
 
 ```bash
-cd plugins/founder-suite/skills/market-validation && python3 -m pytest -q tests/
-cd plugins/founder-suite/skills/build-options     && python3 -m pytest -q tests/
+cd plugins/market-validation && python3 -m pytest -q tests/
+cd plugins/build-options     && python3 -m pytest -q tests/
 ```
 
 ## License

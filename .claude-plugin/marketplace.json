@@ -8,11 +8,19 @@
   },
   "plugins": [
     {
-      "name": "founder-suite",
-      "description": "Validate a market (market-validation) then decide what to build (build-options). Multi-angle web research with live-URL verification → cited evidence pack + Tufte deck; then an independent judge-panel weighted decision matrix → a recommended build with kill criteria. Chains into the prd → tasks skills.",
+      "name": "market-validation",
+      "description": "Validate whether there is a real market for a product idea: multi-angle web research with live-URL verification → cited evidence pack → Tufte HTML deck + PDF/PPTX → a build/integrate brief and an emitted workflow-atlas market map.",
       "author": { "name": "craigm26" },
       "category": "productivity",
-      "source": "./plugins/founder-suite",
+      "source": "./plugins/market-validation",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "build-options",
+      "description": "Decide what to build after a market is validated: divergent options → independent judge-panel weighted decision matrix → adversarial stress-test → a recommended build with kill criteria. Chains into the prd → tasks skills.",
+      "author": { "name": "craigm26" },
+      "category": "productivity",
+      "source": "./plugins/build-options",
       "homepage": "https://github.com/craigm26/founder-skills"
     }
   ]

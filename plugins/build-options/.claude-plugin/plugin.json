@@ -1,0 +1,9 @@
+{
+  "name": "build-options",
+  "version": "0.1.0",
+  "description": "Decide WHAT to build after a market is validated: generate divergent build options, score them with an independent judge panel into a weighted decision matrix, adversarially stress-test the top, recommend one with kill criteria, render a Tufte decision matrix, and hand the winner to the prd skill.",
+  "author": { "name": "Craig Merry", "email": "craigm26@gmail.com" },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": ["build-options", "decision-matrix", "product", "founder", "prioritization"]
+}

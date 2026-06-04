@@ -1,0 +1,9 @@
+{
+  "name": "market-validation",
+  "version": "0.1.0",
+  "description": "Validate whether there is a real market for a product idea, end to end: scope questions → a multi-angle web-research workflow with mandatory live-URL verification → a cited evidence pack → a Tufte HTML deck + PDF + PPTX → a build/integrate brief and an emitted workflow-atlas market map.",
+  "author": { "name": "Craig Merry", "email": "craigm26@gmail.com" },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": ["market-validation", "research", "founder", "product", "evidence"]
+}
