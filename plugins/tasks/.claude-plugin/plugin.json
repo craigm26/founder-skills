@@ -1,0 +1,9 @@
+{
+  "name": "tasks",
+  "version": "0.1.0",
+  "description": "Convert a PRD markdown file into a prd.json task plan for execution: extract tasks and explode each into granular, machine-verifiable sub-tasks with acceptance criteria. Chains after the prd skill.",
+  "author": { "name": "Craig Merry", "email": "craigm26@gmail.com" },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": ["tasks", "prd", "execution", "planning", "founder"]
+}

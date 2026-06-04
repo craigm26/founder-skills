@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "founder-skills",
-  "description": "Claude Code skills for founders and builders: validate whether a market is real, then decide what to build. From market evidence to a build decision, with cited research and an auditable decision matrix.",
+  "description": "Claude Code skills for founders and builders: validate whether a market is real, decide what to build, then spec and plan it. Cited research, an auditable decision matrix, and an implementation-ready PRD → task plan.",
   "owner": {
     "name": "Craig Merry",
     "email": "craigm26@gmail.com"
@@ -17,10 +17,26 @@
     },
     {
       "name": "build-options",
-      "description": "Decide what to build after a market is validated: divergent options → independent judge-panel weighted decision matrix → adversarial stress-test → a recommended build with kill criteria. Chains into the prd → tasks skills.",
+      "description": "Decide what to build after a market is validated: divergent options → independent judge-panel weighted decision matrix → adversarial stress-test → a recommended build with kill criteria. Chains into prd → tasks.",
       "author": { "name": "craigm26" },
       "category": "productivity",
       "source": "./plugins/build-options",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "prd",
+      "description": "Generate a Product Requirements Document for a new feature: self-clarify the open questions, then produce a clear, actionable, implementation-ready PRD. Chains after build-options and into tasks.",
+      "author": { "name": "craigm26" },
+      "category": "productivity",
+      "source": "./plugins/prd",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "tasks",
+      "description": "Convert a PRD markdown file into a prd.json task plan: extract tasks and explode each into granular, machine-verifiable sub-tasks with acceptance criteria. Chains after prd.",
+      "author": { "name": "craigm26" },
+      "category": "productivity",
+      "source": "./plugins/tasks",
       "homepage": "https://github.com/craigm26/founder-skills"
     }
   ]
