@@ -1,0 +1,12 @@
+{
+  "name": "founder-suite",
+  "version": "0.1.0",
+  "description": "Founder toolkit for Claude Code: validate a market, then decide what to build. Bundles two skills — market-validation (multi-angle web research with live-URL verification → cited evidence pack → Tufte HTML deck + PDF/PPTX + a build brief) and build-options (divergent options → independent judge-panel weighted decision matrix → adversarial stress-test → a recommended build with kill criteria). Designed to chain: market-validation → build-options → prd → tasks.",
+  "author": {
+    "name": "Craig Merry",
+    "email": "craigm26@gmail.com"
+  },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": ["market-validation", "product", "founder", "decision-matrix", "research"]
+}

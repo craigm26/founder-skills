@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "Is there a market for ShiftMate?",
+    "subtitle": "Evidence that hourly teams need a faster way to swap and fill shifts",
+    "date": "June 2, 2026",
+    "provenance": "Illustrative example — a fictional product (ShiftMate) validated against the real, public shift-scheduling market · 9-angle workflow · 60 raw claims → 18 curated → 18 live-URL-verified · 8 competitors mapped",
+    "verdictTag": "Real market, crowded — win a wedge, not the suite"
+  },
+  "verdict": {
+    "headline": "Yes — hourly scheduling pain is real, large, and already monetized. But the category is crowded with funded full-suite incumbents and strong free tiers, so a standalone swap app must win a sharp wedge, not fight on the whole suite.",
+    "paras": [
+      "The pain is concrete and recurring: managers fill last-minute gaps by blasting group texts, workers can't easily trade shifts, and no-shows cost revenue — a daily operational tax on every hourly location [1][2].",
+      "The market is large and proven to pay: full-suite scheduling tools price per-employee per-month and are used across tens of thousands of locations, so businesses demonstrably budget for this category [3][4].",
+      "But incumbents are well-funded and several ship a capable free tier, and the status-quo substitute (group texts + a spreadsheet) is free — so a paid 'just swapping' product races both funded suites and zero-price defaults [5][6].",
+      "Net: target the swap/open-shift wedge where the suites are weakest, monetize on filled-shift value or a per-location floor, and pick a beachhead vertical rather than competing as another general scheduler."
+    ],
+    "confidence": [
+      { "label": "The pain & the market are real", "level": "HIGH" },
+      { "label": "A standalone swap app (vs. a full suite) is the right wedge", "level": "MODERATE" },
+      { "label": "Free-tier incumbents leave durable room to charge", "level": "LOW" }
+    ]
+  },
+  "sizing": {
+    "note": "What anchors the opportunity — recurring per-seat spend vs. the harder-to-capture status quo.",
+    "bars": [
+      { "label": "Hourly-workforce scheduling software (recurring SaaS)", "sub": "paid per-employee per-month — durable operating spend", "value": 3.0, "unit": "$B / yr (illustrative)", "status": "durable", "ref": 3 },
+      { "label": "Locations still coordinating shifts by text/spreadsheet", "sub": "large but low-willingness-to-switch", "value": 6.0, "unit": "$B equiv. (illustrative)", "status": "frozen", "ref": 1 },
+      { "label": "Standalone paid 'swap-only' tools", "sub": "small today — the open wedge", "value": 0, "unit": "early", "status": "ended", "ref": 6 }
+    ]
+  },
+  "funding": {
+    "note": "Capital in the workforce-scheduling category (illustrative, public). Repeated and at scale — the market is funded.",
+    "events": [
+      { "company": "When I Work", "date": "2020-01", "label": "2020", "amount": 200.0, "round": "growth (TA Associates)", "tier": "direct", "ref": 3 },
+      { "company": "Deputy", "date": "2021-05", "label": "2021", "amount": 81.0, "round": "Series B", "tier": "direct", "ref": 4 },
+      { "company": "Connecteam", "date": "2022-06", "label": "2022", "amount": 120.0, "round": "Series C", "tier": "adjacent", "ref": 7 },
+      { "company": "Homebase", "date": "2021-11", "label": "2021", "amount": 71.0, "round": "Series C", "tier": "counter", "ref": 5 }
+    ]
+  },
+  "pain": {
+    "intro": "Sourced across operators, hourly workers, and category research — the friction shows up the same way in restaurants, retail, and care.",
+    "items": [
+      { "point": "Coverage is chased by group text", "quote": "When someone calls out, the manager texts the whole team and hopes — there's no system, just a thread and luck.", "who": "Illustrative operator interview", "ref": 1 },
+      { "point": "Workers can't easily trade shifts", "quote": "If I want to swap, I have to find someone myself, then get the manager to approve it — most people just don't bother.", "who": "Illustrative hourly worker", "ref": 2 },
+      { "point": "No-shows and gaps cost real money", "quote": "An unfilled shift is lost revenue and a worse customer experience — every single time.", "who": "Illustrative category research", "ref": 1 },
+      { "point": "Compliance adds a paperwork layer", "quote": "Predictive-scheduling rules in several cities mean shift changes have to be tracked and documented, not just texted.", "who": "Illustrative compliance note", "ref": 8 }
+    ],
+    "kicker": "Crucially, operators already pay to solve this — per-seat scheduling SaaS and the salary cost of manual coverage — the strongest form of demand evidence."
+  },
+  "categories": [
+    { "key": "direct", "label": "Direct (full-suite scheduling)", "meaning": "Targets the same buyer — the 'market is real and paid' tier" },
+    { "key": "adjacent", "label": "Adjacent (enterprise / ops apps)", "meaning": "Proves hourly teams pay recurring fees for workforce tooling" },
+    { "key": "counter", "label": "Counter-model (free tier / status quo)", "meaning": "Free schedulers and group-text/spreadsheet defaults — a pricing warning" },
+    { "key": "caution", "label": "Cautionary", "meaning": "Entered then exited or got absorbed" }
+  ],
+  "competitors": [
+    { "name": "When I Work", "category": "direct", "what": "Per-employee scheduling + time-clock + shift-swap requests for hourly teams; mobile-first.", "funding": "$200M growth investment (TA Associates, 2020); used across tens of thousands of workplaces.", "fundingNum": 200.0, "ref": 3 },
+    { "name": "Deputy", "category": "direct", "what": "Scheduling, time & attendance, and compliance for shift-based businesses; per-user pricing.", "funding": "$81M Series B (2021); large global install base.", "fundingNum": 81.0, "ref": 4 },
+    { "name": "Sling", "category": "direct", "what": "Shift scheduling with built-in shift-swap and open-shift features; freemium.", "funding": "Acquired into a larger payroll/HR suite; free + paid tiers.", "fundingNum": null, "ref": 6 },
+    { "name": "Hot Schedules (Fourth)", "category": "adjacent", "what": "Enterprise restaurant scheduling + labor management; deep but heavyweight.", "funding": "Part of Fourth; serves large restaurant chains.", "fundingNum": null, "ref": 9 },
+    { "name": "Connecteam", "category": "adjacent", "what": "All-in-one deskless-workforce app (scheduling, chat, tasks); proves recurring WTP for hourly ops tooling.", "funding": "$120M Series C (2022); 38,000+ companies claimed.", "fundingNum": 120.0, "ref": 7 },
+    { "name": "Homebase", "category": "counter", "what": "Scheduling + time clock with a capable free tier for single locations — monetizes upsells, not the core schedule.", "funding": "$71M Series C (2021); 100,000+ businesses.", "fundingNum": 71.0, "ref": 5 },
+    { "name": "Group text + spreadsheet", "category": "counter", "what": "The zero-price status quo: a team SMS thread and a shared sheet. Free, universal, and the real competitor for small teams.", "funding": "Free / status quo.", "fundingNum": null, "ref": 1 },
+    { "name": "ShiftPin (illustrative)", "category": "caution", "what": "A hypothetical swap-only app that gained users but couldn't monetize against free tiers and was absorbed — the cautionary pattern for a thin wedge.", "funding": "Illustrative cautionary entry — no real company.", "fundingNum": null, "ref": 6 }
+  ],
+  "competitorKicker": "The direct tier — funded full-suite schedulers used across tens of thousands of locations — is hard evidence that operators pay to solve shift coverage. The adjacent tier proves recurring willingness-to-pay for hourly-ops apps. The counter tier is the caution: capable free schedulers and the free group-text default are the real pricing pressure on a paid swap-only product.",
+  "wtp": {
+    "intro": "Operators demonstrably pay — per seat, and through the salary cost of manual coverage. Evidence that they'll pay extra for swapping alone is thinner.",
+    "items": [
+      { "point": "They already pay per-employee per-month", "detail": "Full-suite schedulers price roughly $2–$5 per user per month across tens of thousands of locations — a clear, recurring budget line for this job.", "ref": 3 },
+      { "point": "Manual coverage has a salary cost", "detail": "Managers spend hours per week building and patching schedules; that labor is a recurring cost a tool can displace.", "ref": 1 },
+      { "point": "Compliance raises the stakes", "detail": "Predictive-scheduling ordinances in several US cities require documented shift changes, increasing the value of a system of record over a text thread.", "ref": 8 },
+      { "point": "Free tiers anchor expectations low", "detail": "Because a capable free scheduler exists, willingness-to-pay for 'just swapping' is the unproven part — the wedge must add value the free tier doesn't.", "ref": 5 }
+    ],
+    "honest": "WTP for the whole scheduling job is proven; WTP for a standalone swap layer on top of a free or already-paid scheduler is unproven. Bankable models charge per-location or on filled-shift value, not a thin add-on fee."
+  },
+  "homeowner": [
+    { "stat": "~$2–5", "label": "per employee / month — established price band for hourly scheduling", "ref": 3 },
+    { "stat": "Several", "label": "US cities have predictive-scheduling laws raising compliance value", "ref": 8 },
+    { "stat": "Free", "label": "tiers + group texts are the dominant status-quo substitute", "ref": 5 }
+  ],
+  "global": [
+    { "region": "United States", "text": "Largest, most competitive market with the most funded incumbents (When I Work, Deputy, Homebase) and a layer of city-level predictive-scheduling regulation that raises the value of a documented system of record.", "refs": [3, 8] },
+    { "region": "United Kingdom / EU", "text": "Real demand in hospitality and retail; Deputy and Connecteam operate here, and working-time rules add a compliance angle to scheduling tools.", "refs": [4, 7] },
+    { "region": "Australia", "text": "Mature market — Deputy originated here and is widely used, proving a shift-scheduling SaaS can dominate a national hospitality/retail base.", "refs": [4] }
+  ],
+  "counter": {
+    "intro": "The section that should move the decision. The market is real, but three risks are material for a standalone swap app.",
+    "risks": [
+      { "title": "A. Incumbents already ship swap features", "body": "Swap and open-shift requests are built into When I Work, Deputy, and Sling. A standalone swap app must be meaningfully better at the wedge (speed, marketplace liquidity, or a vertical fit), not just present.", "weak": false, "refs": [3, 4, 6] },
+      { "title": "B. A capable free tier resets willingness-to-pay", "body": "Homebase offers a strong free scheduling tier for single locations, and group-text + spreadsheet is free everywhere. A paid swap-only product is racing zero-price defaults; monetization must attach to value the free path can't deliver.", "weak": false, "refs": [5] },
+      { "title": "C. The thin-wedge trap", "body": "A swap-only feature is easy to copy and hard to defend if it stays a feature rather than a system of record. The illustrative ShiftPin pattern — adoption without monetization, then absorption — is the failure mode to design against.", "weak": false, "refs": [6] }
+    ],
+    "gaps": [
+      "This is an illustrative example — figures are rounded/indicative and not a live-verified evidence pack.",
+      "No primary unit-economics or churn data on incumbents — public funding/usage figures are indicative.",
+      "Vertical-specific WTP (e.g., healthcare vs. quick-service restaurants) is not broken out and would change the wedge."
+    ]
+  },
+  "sources": [
+    { "n": 1, "title": "How hourly teams handle shift coverage (illustrative operator research)", "pub": "Illustrative", "date": "2026", "url": "https://example.com/shift-coverage-research" },
+    { "n": 2, "title": "What hourly workers want from shift swapping (illustrative interviews)", "pub": "Illustrative", "date": "2026", "url": "https://example.com/worker-interviews" },
+    { "n": 3, "title": "When I Work — product & company", "pub": "When I Work", "date": "", "url": "https://wheniwork.com" },
+    { "n": 4, "title": "Deputy — product & company", "pub": "Deputy", "date": "", "url": "https://www.deputy.com" },
+    { "n": 5, "title": "Homebase — pricing & free tier", "pub": "Homebase", "date": "", "url": "https://www.joinhomebase.com/pricing" },
+    { "n": 6, "title": "Sling — scheduling & shift swapping", "pub": "Sling", "date": "", "url": "https://getsling.com" },
+    { "n": 7, "title": "Connecteam — deskless workforce app", "pub": "Connecteam", "date": "", "url": "https://connecteam.com" },
+    { "n": 8, "title": "Predictive scheduling / fair workweek laws (overview)", "pub": "Illustrative compliance overview", "date": "2026", "url": "https://example.com/predictive-scheduling-overview" },
+    { "n": 9, "title": "HotSchedules / Fourth — enterprise scheduling", "pub": "Fourth", "date": "", "url": "https://www.fourth.com" }
+  ]
+}

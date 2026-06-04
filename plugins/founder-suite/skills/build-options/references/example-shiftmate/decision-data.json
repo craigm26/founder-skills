@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "title": "What should ShiftMate build?",
+    "subtitle": "Build-option decision for an hourly shift-swap product",
+    "date": "2026-06-02",
+    "provenance": "build-options skill · 5 options × 8 criteria · 3-judge panel + adversarial stress-test (illustrative golden example)",
+    "sourceRun": "market-validation: faster shift swapping / open-shift coverage for hourly teams"
+  },
+  "context": {
+    "constraints": "Solo/small team; weeks-to-months horizon; must keep cost-to-serve low and ship a wedge, not a full suite.",
+    "mustReuseAssets": ["Mobile app shell + auth (have)", "Shift data model + calendar sync", "Push-notification pipeline", "Manager web dashboard"],
+    "incumbents": ["Full-suite schedulers (When I Work, Deputy) ship swap features; Homebase offers a strong free tier; group-text + spreadsheet is the free status quo → differentiate on liquidity and a vertical, not on being another scheduler"]
+  },
+  "criteria": [
+    {"key": "wtp_fit", "label": "Willingness-to-pay fit", "weight": 0.20, "higherIsBetter": true},
+    {"key": "incumbent_displacement", "label": "Beats the incumbent", "weight": 0.20, "higherIsBetter": true},
+    {"key": "time_to_mvp", "label": "Speed to MVP", "weight": 0.15, "higherIsBetter": true},
+    {"key": "moat", "label": "Moat / defensibility", "weight": 0.12, "higherIsBetter": true},
+    {"key": "unit_econ", "label": "Unit economics", "weight": 0.12, "higherIsBetter": true},
+    {"key": "gtm", "label": "Distribution / GTM", "weight": 0.11, "higherIsBetter": true},
+    {"key": "reg_risk", "label": "Regulatory risk", "weight": 0.05, "higherIsBetter": false},
+    {"key": "asset_fit", "label": "Fit with existing assets", "weight": 0.05, "higherIsBetter": true}
+  ],
+  "options": [
+    {
+      "id": "automation-undercut", "name": "Open-shift marketplace", "lens": "liquidity-wedge",
+      "thesis": "Win the one job full-suite tools do clumsily: instantly match open shifts to available workers. Fast matching + push beats a manager's group text, and it's the wedge incumbents under-serve.",
+      "mvpScope": "Worker app + manager dashboard: post open shift → eligible workers pinged → first-accept (with approval rules) → calendar/clock sync. Per-location pricing.",
+      "businessModel": "Per-location monthly floor; upsell on filled-shift volume.",
+      "incumbentBeat": "Suites treat swapping as a checkbox; a liquidity-first marketplace is faster and stickier for the coverage job.",
+      "requiredAssets": ["app shell (have)", "shift data model (have)", "matching + notifications", "approval rules"],
+      "keyRisks": ["liquidity cold-start per location", "incumbents improve their swap UX", "free-tier price pressure"],
+      "timeToRevenue": "weeks",
+      "scores": {
+        "wtp_fit": {"mean": 4.5, "spread": 1, "notes": "coverage is the daily pain operators pay for"},
+        "incumbent_displacement": {"mean": 4.7, "spread": 1, "notes": "directly out-executes the weak swap UX"},
+        "time_to_mvp": {"mean": 4.5, "spread": 1, "notes": "reuses app shell + shift model"},
+        "moat": {"mean": 2.5, "spread": 2, "notes": "liquidity helps but feature is copyable"},
+        "unit_econ": {"mean": 4.0, "spread": 1, "notes": "low marginal cost per location"},
+        "gtm": {"mean": 3.0, "spread": 2, "notes": "must reach operators; incumbents entrenched"},
+        "reg_risk": {"mean": 3.0, "spread": 2, "notes": "predictive-scheduling documentation duties"},
+        "asset_fit": {"mean": 5.0, "spread": 0, "notes": "reuses the app + data model wholesale"}
+      },
+      "adversarial": {"verdict": "survive", "killerRisks": ["incumbents could improve swap UX and erase the edge", "per-location liquidity cold-start may stall growth"]}
+    },
+    {
+      "id": "white-label-api", "name": "Coverage API / white-label", "lens": "platform-api",
+      "thesis": "Sell the matching engine as an API/white-label that POS and workforce apps embed for open-shift filling.",
+      "mvpScope": "Authenticated REST endpoint: post shift + eligibility → ranked candidates; usage-based keys; 1-2 design partners.",
+      "businessModel": "Usage/seat pricing to software vendors (B2B2C).",
+      "incumbentBeat": "Distribution leverage — ride partners' reach instead of fighting suites direct.",
+      "requiredAssets": ["matching engine", "API auth/metering", "partner BD"],
+      "keyRisks": ["long B2B sales cycles", "partner concentration"],
+      "timeToRevenue": "months",
+      "scores": {
+        "wtp_fit": {"mean": 3.5, "spread": 1, "notes": "vendors pay if it saves build"},
+        "incumbent_displacement": {"mean": 3.5, "spread": 1, "notes": "indirect"},
+        "time_to_mvp": {"mean": 3.0, "spread": 1, "notes": "metering+auth to add"},
+        "moat": {"mean": 4.0, "spread": 1, "notes": "integration lock-in"},
+        "unit_econ": {"mean": 4.0, "spread": 1, "notes": "low marginal cost"},
+        "gtm": {"mean": 2.5, "spread": 2, "notes": "slow B2B"},
+        "reg_risk": {"mean": 2.5, "spread": 1, "notes": "liability shifts to partner somewhat"},
+        "asset_fit": {"mean": 4.0, "spread": 1, "notes": "engine reuse + API layer"}
+      },
+      "adversarial": {"verdict": "survive", "killerRisks": ["sales cycle may outlast runway"]}
+    },
+    {
+      "id": "compliance-premium", "name": "Compliance system-of-record", "lens": "premium-differentiate",
+      "thesis": "Go beyond swapping into a documented system-of-record for predictive-scheduling / fair-workweek compliance, sold at a premium.",
+      "mvpScope": "Add change logs, premium-pay triggers, and audit exports to the swap flow; premium tier.",
+      "businessModel": "Higher per-location or subscription for compliance tier.",
+      "incumbentBeat": "Differentiate on depth where lightweight swap tools are commoditized.",
+      "requiredAssets": ["swap flow", "audit log + reporting", "jurisdiction rules"],
+      "keyRisks": ["smaller addressable set (regulated cities)", "rules accuracy/claims"],
+      "timeToRevenue": "months",
+      "scores": {
+        "wtp_fit": {"mean": 3.0, "spread": 2, "notes": "narrower buyer set (regulated metros)"},
+        "incumbent_displacement": {"mean": 3.0, "spread": 1, "notes": "sidesteps rather than displaces"},
+        "time_to_mvp": {"mean": 3.5, "spread": 1, "notes": "some rules/reporting work"},
+        "moat": {"mean": 3.5, "spread": 1, "notes": "system-of-record depth"},
+        "unit_econ": {"mean": 3.5, "spread": 1, "notes": "rules-maintenance cost"},
+        "gtm": {"mean": 3.0, "spread": 1, "notes": "needs positioning"},
+        "reg_risk": {"mean": 1.5, "spread": 1, "notes": "compliance is the product, lower downside"},
+        "asset_fit": {"mean": 4.5, "spread": 1, "notes": "extends the swap flow"}
+      },
+      "adversarial": {"verdict": "wounded", "killerRisks": ["compliance claims invite accuracy disputes", "regulated-metro market may be too small to anchor alone"]}
+    },
+    {
+      "id": "freemium-worker", "name": "Freemium worker app", "lens": "niche-wedge",
+      "thesis": "Free worker swap app to acquire teams bottom-up; paid manager dashboard.",
+      "mvpScope": "Free worker swap/claim flow → upsell managers to approvals + analytics.",
+      "businessModel": "Free top-of-funnel; paid manager conversion.",
+      "incumbentBeat": "Bottom-up worker acquisition the incumbents don't chase.",
+      "requiredAssets": ["worker app (have)", "funnel/analytics"],
+      "keyRisks": ["thin conversion economics", "free abuse"],
+      "timeToRevenue": "weeks",
+      "scores": {
+        "wtp_fit": {"mean": 3.0, "spread": 1, "notes": "conversion uncertain"},
+        "incumbent_displacement": {"mean": 3.5, "spread": 1, "notes": "free hook"},
+        "time_to_mvp": {"mean": 4.0, "spread": 1, "notes": "mostly funnel"},
+        "moat": {"mean": 2.0, "spread": 1, "notes": "easily copied"},
+        "unit_econ": {"mean": 2.0, "spread": 2, "notes": "free tier cost; thin paid margin"},
+        "gtm": {"mean": 4.0, "spread": 1, "notes": "worker word-of-mouth spreads"},
+        "reg_risk": {"mean": 3.0, "spread": 1, "notes": "same scheduling-compliance exposure"},
+        "asset_fit": {"mean": 4.0, "spread": 1, "notes": "app reuse"}
+      },
+      "adversarial": {"verdict": "wounded", "killerRisks": ["free-to-paid conversion may not cover costs"]}
+    },
+    {
+      "id": "bundle-pos", "name": "Bundle with POS / payroll", "lens": "bundle-aggregate",
+      "thesis": "Bundle scheduling/coverage into a POS or payroll suite as an add-on module.",
+      "mvpScope": "Integration/module + revenue share with a POS or payroll vendor.",
+      "businessModel": "Rev-share / add-on fee via partner software.",
+      "incumbentBeat": "Owns the operator workflow context lightweight tools lack.",
+      "requiredAssets": ["scheduling module", "partner integration", "BD"],
+      "keyRisks": ["heavy partner dependency", "build-vs-buy negotiation"],
+      "timeToRevenue": "quarters",
+      "scores": {
+        "wtp_fit": {"mean": 3.0, "spread": 1, "notes": "embedded convenience"},
+        "incumbent_displacement": {"mean": 2.5, "spread": 1, "notes": "indirect, partner-gated"},
+        "time_to_mvp": {"mean": 2.0, "spread": 2, "notes": "partner integration is slow"},
+        "moat": {"mean": 3.0, "spread": 1, "notes": "workflow embedding"},
+        "unit_econ": {"mean": 3.0, "spread": 1, "notes": "rev-share dilutes"},
+        "gtm": {"mean": 4.0, "spread": 1, "notes": "partner reach"},
+        "reg_risk": {"mean": 2.5, "spread": 1, "notes": "shared compliance duties"},
+        "asset_fit": {"mean": 2.5, "spread": 2, "notes": "needs integration glue"}
+      },
+      "adversarial": {"verdict": "wounded", "killerRisks": ["partner dependency dictates timeline & take rate"]}
+    }
+  ],
+  "recommendation": {
+    "optionId": "automation-undercut",
+    "rationale": "The open-shift marketplace reuses the existing app + shift model, attacks the coverage job incumbents do clumsily, and has the fastest path to revenue with the best asset fit. Its weakness is moat (a swap feature is copyable) — so graft the compliance system-of-record as phase 2 for defensibility.",
+    "grafts": ["Add the compliance system-of-record (compliance-premium) as phase 2 to turn a copyable feature into a sticky system of record (moat).", "Layer the coverage API (white-label-api) later for distribution once the matching engine is proven."],
+    "confidence": "MODERATE"
+  },
+  "killCriteria": [
+    "If incumbents ship materially better swap UX, the wedge narrows — re-score incumbent_displacement and lean into compliance depth.",
+    "If per-location liquidity won't cold-start (not enough available workers to fill posts), the marketplace value fails — shift weight to a vertical with denser staffing.",
+    "If operators won't pay above the free tier for coverage alone, attach price to compliance/system-of-record value instead of the swap feature."
+  ]
+}
