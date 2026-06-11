@@ -39,16 +39,16 @@ print("}")
 Then `python3 market_map_to_dot.py market-map/ | dot -Tsvg > market-map.svg`, or paste the
 equivalent edges into a Mermaid `graph LR` block for GitHub-rendered markdown.
 
-## Sink 3 — a graph/workflow platform (worked example: workflow-atlas)
+## Sink 3 — a graph/workflow platform (worked example: PlatAtlas)
 
-[workflow-atlas](https://github.com/craigm26) (the engine behind PlatAtlas) consumes exactly
-this families/nodes/flows shape from a repo's `docs/workflows/` directory. To use it as a sink:
+[PlatAtlas](https://platatlas.com) (workflow-cognition mapping) consumes exactly this
+families/nodes/flows shape from a repo's `docs/workflows/` directory. To use it as a sink:
 drop `nodes.json` + `flows.json` there, register the atlas in the console, and refresh.
 
 **Honesty caveat (applies to any third-party sink):** the emitted files are *shape-valid*
 against that parser's documented format, but unless you have personally run the end-to-end
 load-and-render path, describe the integration as **"shape-valid, load-untested"** — never
-"works today". If your platform lacks a write API (workflow-atlas's atlas write path is
+"works today". If your platform lacks a write API (PlatAtlas's atlas write path is
 file-drop only), a one-click import endpoint is its own project, not this skill's output.
 
 ## Writing your own sink
