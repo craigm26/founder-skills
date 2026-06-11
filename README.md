@@ -1,7 +1,8 @@
 # founder-skills
 
-**A judgment layer for Claude Code** — six skills that sit above Anthropic's execution primitives
+**A judgment layer for Claude Code** — twelve skills that sit above Anthropic's execution primitives
 and tell the model *when* to plan, *which model* to use, and *how* to structure work across a session.
+Four groups: session calibration, Fable 5 orchestration, the founder workflow chain, and craft.
 
 Started as a founder's research-to-spec chain. Generalized into a starter package for any builder,
 developer, or researcher using Claude Code with Fable 5.
@@ -80,11 +81,19 @@ Install specific skills:
 /plugin install build-options@founder-skills
 /plugin install prd@founder-skills
 /plugin install tasks@founder-skills
+/plugin install fable-orchestrated-feature-dev@founder-skills
+/plugin install fable-repo-audit@founder-skills
+/plugin install fable-org-audit@founder-skills
+/plugin install fable-loop-design@founder-skills
+/plugin install tufte-viz@founder-skills
+/plugin install ecosystem-planning@founder-skills
 ```
 
-Or install all six:
+Or install all twelve:
 ```bash
-for skill in session-start effort market-validation build-options prd tasks; do
+for skill in session-start effort market-validation build-options prd tasks \
+             fable-orchestrated-feature-dev fable-repo-audit fable-org-audit \
+             fable-loop-design tufte-viz ecosystem-planning; do
   /plugin install ${skill}@founder-skills
 done
 ```
@@ -134,10 +143,8 @@ Prevents an hour of wrong-direction work.
 ### Architecture or multi-repo scope
 
 ```
-/effort → /ecosystem-planning* → /session-start per workstream
+/effort → /ecosystem-planning → /fable-orchestrated-feature-dev per workstream
 ```
-
-*`ecosystem-planning` lives in the private `craigm26/claude-skills` repo — link below.
 
 ---
 
@@ -151,6 +158,12 @@ Prevents an hour of wrong-direction work.
 | **build-options** | `/build-options` | Divergent options → independent judge-panel weighted decision matrix → adversarial stress-test → recommended build with kill criteria → hands to `prd`. |
 | **prd** | `/prd` | Self-clarify open questions, then generate a clear implementation-ready Product Requirements Document. |
 | **tasks** | `/tasks` | Convert a PRD markdown file into a `prd.json` task plan — granular, machine-verifiable sub-tasks with acceptance criteria. |
+| **fable-orchestrated-feature-dev** | `/fable-orchestrated-feature-dev` | Fable plans → Opus/Sonnet implements → Fable reviews. The plan file is the handoff artifact; external-executor fallback when tokens run out. |
+| **fable-repo-audit** | `/fable-repo-audit` | 4-phase principal-level repo audit: map → severity-rated findings (file:line) → strategy → milestone task plan. Analysis only. |
+| **fable-org-audit** | `/fable-org-audit` | Live 8-dimension integration audit of a customer org on your platform, graded 🟢🟡🔴⚫ with a prioritized gap list. Portable pattern + PlatAtlas worked example. |
+| **fable-loop-design** | `/fable-loop-design` | Design self-correction loops (rubric + independent verifier sub-agent) and cross-session memory (fail → investigate → verify → distill → consult). |
+| **tufte-viz** | `/tufte-viz` | Ideate and critique data visualizations on Tufte's principles. Ships 4 working HTML demos as calibration examples. |
+| **ecosystem-planning** | `/ecosystem-planning` | One approvable plan across ≥3 repos: verified facts, parallel Explore/Plan agents, advisor review, re-runnable definition of done. |
 
 ---
 
@@ -189,12 +202,11 @@ See each plugin's `references/example-shiftmate/`.
 
 ---
 
-## Related skills (private repo)
+## Origins
 
-The private `craigm26/claude-skills` repo extends this judgment layer with Fable 5 orchestration
-skills: `fable-orchestrated-feature-dev`, `fable-repo-audit`, `fable-org-audit`, `fable-loop-design`,
-`ecosystem-planning`, and `tufte-viz`. These are paired with the public chain — the chain produces
-specs; the orchestration skills execute and review them.
+The six orchestration/craft skills graduated from a private incubation repo on 2026-06-11 as
+sanitized near-copies — personal stack details generalized, client references removed. Personal
+variants may diverge from the published versions.
 
 ---
 
