@@ -33,7 +33,7 @@ options:
   - label: "Deep build"
     description: "Opus 4.8 throughout — planning, implementation review, loop design. Reserve for architectural decisions or high-stakes launches."
   - label: "Constrained (low tokens this week)"
-    description: "Sonnet 4.6 only. Hand off heavy implementation to Codex via /goal <plan-path> when tokens run low."
+    description: "Sonnet 4.6 only. Hand heavy implementation off as a written plan file to an external executor when tokens run low."
 
 Question 2 — Domain
 header: "Domain"
@@ -55,7 +55,7 @@ options:
   - label: "A decision I can act on"
     description: "A recommendation with rationale I trust enough to move forward."
   - label: "A plan file I can hand off"
-    description: "A written spec, PRD, or implementation plan ready for Sonnet/Opus/Codex to execute."
+    description: "A written spec, PRD, or implementation plan ready for an implementation model or external executor."
   - label: "Working code merged or deployed"
     description: "A concrete, verified, shipped change."
   - label: "A brief or artifact I can share"
@@ -72,7 +72,7 @@ After collecting answers, announce the session context aloud and save it:
 ## Session Context — [date]
 
 **Effort tier:** [Quick / Focused / Deep / Constrained]
-**Model routing:** [Sonnet throughout / Sonnet impl + Opus plan+review / Opus throughout / Sonnet + Codex fallback]
+**Model routing:** [Sonnet throughout / Sonnet impl + Opus plan+review / Opus throughout / Sonnet + external-executor fallback]
 **Domain:** [new product / existing feature / research / infra]
 **Done looks like:** [decision / plan file / merged code / artifact]
 **Goal (from user):** [one sentence from their message or AskUserQuestion notes]
@@ -101,7 +101,8 @@ Announce: "This session I'll route to [skill chain]. Say the skill name to begin
 
 ## Step 4 — Load memory
 
-Before doing any work, read `~/.claude/projects/-home-<user>/memory/MEMORY.md` (if it exists).
+Before doing any work, read your Claude Code memory index (`~/.claude/projects/<project>/memory/MEMORY.md`,
+if it exists — see [Memory](https://code.claude.com/docs/en/memory)).
 Summarize any items marked PENDING, BLOCKED, or awaiting-operator that are relevant to this session's domain. Surface them as a short list before proceeding.
 
 ---
@@ -113,7 +114,7 @@ Summarize any items marked PENDING, BLOCKED, or awaiting-operator that are relev
 | Quick | Sonnet 4.6 | Sonnet 4.6 | Sonnet 4.6 |
 | Focused | Opus 4.8 | Sonnet 4.6 | Opus 4.8 |
 | Deep | Opus 4.8 | Opus 4.8 | Opus 4.8 |
-| Constrained | Sonnet 4.6 | Sonnet 4.6 → Codex `/goal` | Sonnet 4.6 |
+| Constrained | Sonnet 4.6 | Sonnet 4.6 → external executor | Sonnet 4.6 |
 
 ---
 
@@ -123,9 +124,10 @@ Summarize any items marked PENDING, BLOCKED, or awaiting-operator that are relev
 |---|---|
 | `AskUserQuestion` | Collects session context before any tokens are spent on work |
 | Memory system (`~/.claude/projects/*/memory/`) | Surfaces pending items from prior sessions |
-| Model routing (Opus / Sonnet / Codex) | Selected once here; downstream skills inherit the choice |
+| Model routing (Opus / Sonnet / external executor) | Selected once here; downstream skills inherit the choice |
 | Skills as judgment layer | This skill activates the right chain; it does not do the work itself |
 
-See: [Claude Code agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) ·
-[Tool use](https://docs.anthropic.com/en/docs/build-with-claude/tool-use) ·
-[Model overview](https://docs.anthropic.com/en/docs/about-claude/models/overview)
+See: [Agent SDK](https://code.claude.com/docs/en/agent-sdk/overview) ·
+[Interactive mode / AskUserQuestion](https://code.claude.com/docs/en/interactive-mode) ·
+[Memory](https://code.claude.com/docs/en/memory) ·
+[Models overview](https://platform.claude.com/docs/en/docs/about-claude/models/overview)

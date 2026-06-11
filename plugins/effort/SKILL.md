@@ -10,7 +10,7 @@ description: >-
 # Effort
 
 A single-question calibrator that sets the **model routing tier** for the session. Every downstream
-skill that routes to Opus vs. Sonnet vs. Codex reads this decision. Set it once; change it if
+skill that routes to Opus vs. Sonnet vs. an external executor reads this decision. Set it once; change it if
 the situation changes mid-session.
 
 **Announce at start:** "Using effort to set the token budget tier."
@@ -29,10 +29,10 @@ options:
     description: "Full capability throughout. Best for planning, architectural decisions, high-stakes reviews."
   - label: "Moderate — Sonnet 4.6"
     description: "Strong capability, lower cost. Right for most feature work, research, and iteration."
-  - label: "Constrained — Sonnet + Codex fallback"
-    description: "Sonnet for planning and short tasks; hand heavy implementation to Codex via /goal <plan-path> to preserve remaining tokens."
-  - label: "Sprint end — Codex only"
-    description: "Tokens nearly exhausted. All implementation goes to Codex /goal. Fable plans only; no generation."
+  - label: "Constrained — Sonnet + external executor"
+    description: "Sonnet for planning and short tasks; hand heavy implementation off as a written plan file to an external executor (a cheaper Claude session, Haiku 4.5, or a third-party plan-runner) to preserve remaining tokens."
+  - label: "Sprint end — plans only"
+    description: "Tokens nearly exhausted. Fable writes plans only; all implementation goes to an external executor. No generation here."
 ```
 
 ---
@@ -45,8 +45,8 @@ Announce the routing decision in one line:
 |---|---|
 | Ample | "Effort: Ample. Routing planning and implementation to **Opus 4.8**." |
 | Moderate | "Effort: Moderate. Planning → **Opus 4.8**, implementation → **Sonnet 4.6**." |
-| Constrained | "Effort: Constrained. All work → **Sonnet 4.6**; heavy lifts → **Codex /goal**." |
-| Sprint end | "Effort: Sprint end. Plans only. Implementation → **Codex /goal <path>**." |
+| Constrained | "Effort: Constrained. All work → **Sonnet 4.6**; heavy lifts → **an external executor** (plan file handoff)." |
+| Sprint end | "Effort: Sprint end. Plans only. Implementation → **external executor** (hand it the plan file)." |
 
 Save to `~/.claude/session-context.md` (append or overwrite the `effort_tier` line).
 
@@ -65,7 +65,7 @@ If you observe token pressure mid-session (context approaching limits, user ment
 |---|---|---|
 | Opus 4.8 | Complex reasoning, planning, architectural review | High |
 | Sonnet 4.6 | Feature implementation, iteration, most tasks | Medium |
-| Codex `/goal <path>` | Executing a written plan file without consuming Claude tokens | Minimal |
+| External executor (any plan-runner) | Executing a written plan file with minimal Claude token spend | Minimal |
 
-See: [Claude models overview](https://docs.anthropic.com/en/docs/about-claude/models/overview) ·
-[Claude Code SDK — token routing](https://docs.anthropic.com/en/docs/claude-code/sdk)
+See: [Claude models overview](https://platform.claude.com/docs/en/docs/about-claude/models/overview) ·
+[Interactive mode / AskUserQuestion](https://code.claude.com/docs/en/interactive-mode)

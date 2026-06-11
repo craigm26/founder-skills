@@ -1,9 +1,19 @@
 {
   "name": "effort",
   "version": "0.1.0",
-  "description": "Single-question token budget calibrator — sets Opus/Sonnet/Codex routing tier for the session. Downstream skills inherit this choice.",
-  "author": { "name": "Craig Merry", "email": "craigm26@gmail.com" },
+  "description": "Single-question token budget calibrator — sets the model routing tier (Opus 4.8 / Sonnet 4.6, with an external-executor fallback) for the session. Downstream skills inherit this choice.",
+  "author": {
+    "name": "Craig Merry",
+    "email": "craigm26@gmail.com"
+  },
   "homepage": "https://github.com/craigm26/founder-skills",
   "license": "MIT",
-  "keywords": ["effort", "tokens", "budget", "routing", "opus", "sonnet", "codex"]
+  "keywords": [
+    "effort",
+    "tokens",
+    "budget",
+    "routing",
+    "opus",
+    "sonnet"
+  ]
 }

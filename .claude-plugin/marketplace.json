@@ -19,7 +19,7 @@
     },
     {
       "name": "effort",
-      "description": "Single-question token budget calibrator — sets Opus 4.8 / Sonnet 4.6 / Codex routing tier for the session. Downstream skills inherit this choice.",
+      "description": "Single-question token budget calibrator — sets the model routing tier (Opus 4.8 / Sonnet 4.6, with an external-executor fallback) for the session. Downstream skills inherit this choice.",
       "author": {
         "name": "craigm26"
       },
