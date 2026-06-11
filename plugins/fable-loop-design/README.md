@@ -20,7 +20,8 @@ writing a falsifiable rubric, and structuring the memory files.
 ## What it produces
 
 - A rubric file of checkable criteria
-- A loop harness design (using `/loop`, the Workflow tool, or Managed Agents Outcomes)
+- A loop harness design (using `/goal`, `/loop`, the Workflow tool, or Managed Agents Outcomes —
+  with the real Outcomes mechanics: required rubric, managed grader, bounded iterations)
 - A memory layout (`rules.md` / `open-questions.md` / `failures.md`) with promotion rules
 
 ## Cost

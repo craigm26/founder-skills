@@ -20,6 +20,13 @@ One `AskUserQuestion`:
   external executor (a cheaper Claude session, Haiku 4.5, or a third-party plan-runner)
 - **Sprint end** — plans only; all implementation goes to the external executor
 
+## Related API primitives
+
+Don't confuse this session-level routing with the API's per-request controls: `output_config.effort`
+(low → max) and Task Budgets (a model-visible token countdown for a whole agentic loop). The skill
+documents when each applies — and the official finding that low effort on Fable 5 still performs
+very well, which is what makes the Constrained tier credible.
+
 ## What it produces
 
 A one-line routing announcement and an `effort_tier` entry in `~/.claude/session-context.md`.

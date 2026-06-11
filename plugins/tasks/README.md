@@ -21,6 +21,13 @@ generates the JSON immediately.
 `prd.json` — tasks with dependencies and machine-verifiable acceptance criteria, ready to hand to
 whichever implementation tier your `/effort` setting chose.
 
+## Outcome rubric export
+
+Because every criterion is a boolean check, a `prd.json` task's acceptance criteria export directly
+as a Managed Agents **Outcome rubric** — the format Outcomes requires ("explicit, independently
+gradeable criteria"). That makes `tasks` the bridge from the planning chain to hosted autonomous
+execution.
+
 ## Cost
 
 Minimal — single-model conversion, no subagents.

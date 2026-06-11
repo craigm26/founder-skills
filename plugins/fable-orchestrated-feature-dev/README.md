@@ -22,6 +22,12 @@ genuinely ambiguous. Pair with `/effort` to make that signal explicit up front.
 - The implemented feature (by the chosen implementer model)
 - Fable's review: which acceptance criteria are met, which are missing, any deviations
 
+## Hosted executor option
+
+The plan's acceptance criteria double as a **Managed Agents Outcome rubric**: mount the repo on a
+CMA session, send `user.define_outcome` with the criteria, and the hosted iterate → grade → revise
+loop implements unattended (grader independent, iteration-bounded). See Step 3c in the skill.
+
 ## Cost
 
 Plan + review are a few thousand tokens of Fable; implementation cost depends on the feature and

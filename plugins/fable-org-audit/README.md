@@ -23,6 +23,13 @@ before probing.
   prioritized gap list with effort estimates
 - `~/.claude/audits/org-<slug>-memory.md` — verified rules that make next week's audit start smarter
 
+## Make it recurring
+
+The skill documents two real triggers for the weekly cadence: Claude Code **`/schedule` routines**
+(cloud runs, laptop off) and **CMA scheduled deployments** (cron + a per-firing audit trail).
+Security-adjacent probing is refusal-aware: a Fable 5 classifier decline is reported as refused,
+never silently skipped.
+
 ## Cost
 
 One Fable pass with live API probes — modest tokens; the expensive part is honesty, not volume.

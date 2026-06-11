@@ -22,6 +22,12 @@ repo map, severity-rated findings across 8 dimensions (architecture, quality, se
 performance, dependencies, devex, docs), improvement strategy, and a milestone task plan with
 quick wins flagged.
 
+## Security-adjacent code
+
+Fable 5's safety classifiers can false-positive on auth flows, crypto, or exploit-shaped fixtures.
+The skill handles refusals correctly: HTTP 200 with `stop_reason: "refusal"`, reported as refused
+in the audit (never silently skipped), with the opt-in Opus 4.8 fallback documented.
+
 ## Cost
 
 One deep Fable pass over the repo — typically tens of thousands of tokens for a mid-size repo;
