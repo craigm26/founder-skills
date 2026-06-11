@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>founder-skills — a judgment layer for Claude Code</title>
-<meta name="description" content="Six Claude Code skills that calibrate a session before work begins: effort tier, model routing, and a validate → decide → spec → tasks chain. Built for Fable 5.">
+<meta name="description" content="Twelve Claude Code skills for Fable 5: session calibration, orchestration, a validate → decide → spec → tasks chain, and craft. All installable from one plugin marketplace.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -93,8 +93,8 @@
 <header class="hero">
   <p class="kicker"><span>//</span> claude skills · craigm26 · 2026 · founder-skills</p>
   <h1>A <em>judgment</em> layer for Claude&nbsp;Code</h1>
-  <p class="muted">Six skills that calibrate a session <em>before</em> work begins — effort tier,
-  model routing, and a validate&nbsp;→&nbsp;decide&nbsp;→&nbsp;spec&nbsp;→&nbsp;tasks chain.
+  <p class="muted">Twelve skills that calibrate and orchestrate a session — session calibration,
+  Fable&nbsp;5 orchestration, a validate&nbsp;→&nbsp;decide&nbsp;→&nbsp;spec&nbsp;→&nbsp;tasks chain, and craft.
   For any builder, developer, or researcher running Claude Code with Fable&nbsp;5.</p>
   <pre><code><span class="e">/plugin marketplace add craigm26/founder-skills</span></code></pre>
 </header>
@@ -157,12 +157,16 @@
   <h2>Two commands.</h2>
   <pre><code><span class="e">/plugin marketplace add craigm26/founder-skills</span>
 
-<span class="e">/plugin install session-start@founder-skills</span>   <span class="c"># start here</span>
+<span class="c"># the calibrators — start here</span>
+<span class="e">/plugin install session-start@founder-skills</span>
 <span class="e">/plugin install effort@founder-skills</span>
-<span class="e">/plugin install market-validation@founder-skills</span>
-<span class="e">/plugin install build-options@founder-skills</span>
-<span class="e">/plugin install prd@founder-skills</span>
-<span class="e">/plugin install tasks@founder-skills</span></code></pre>
+
+<span class="c"># or all twelve, one loop</span>
+<span class="c">for s in session-start effort market-validation build-options prd tasks \
+  fable-orchestrated-feature-dev fable-repo-audit fable-org-audit \
+  fable-loop-design tufte-viz ecosystem-planning; do</span>
+<span class="e">  /plugin install ${s}@founder-skills</span>
+<span class="c">done</span></code></pre>
   <p class="muted">Plugins and marketplaces are a native Claude Code feature — see
   <a href="https://code.claude.com/docs/en/plugins">Plugins</a> and
   <a href="https://code.claude.com/docs/en/plugin-marketplaces">Plugin marketplaces</a>.</p>
@@ -216,8 +220,9 @@ Say the skill name to begin.</code></pre>
 </section>
 
 <section id="skills">
-  <span class="tag">05 · The six skills</span>
+  <span class="tag">05 · The twelve skills</span>
   <h2>Walkthroughs.</h2>
+  <h3>Session layer</h3>
   <div class="cards">
     <div class="card"><h3>session-start</h3><span class="cost">~0 tokens</span>
       <p>Three questions calibrate the session, route to a chain, surface pending memory items.</p>
@@ -225,6 +230,24 @@ Say the skill name to begin.</code></pre>
     <div class="card"><h3>effort</h3><span class="cost">~0 tokens</span>
       <p>One question sets the model tier. Re-run mid-session to downgrade under token pressure.</p>
       <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/effort">Walkthrough →</a></div>
+  </div>
+  <h3>Fable 5 orchestration</h3>
+  <div class="cards">
+    <div class="card"><h3>fable-orchestrated-feature-dev</h3><span class="cost">plan + review cheap; impl varies</span>
+      <p>Fable plans → Opus/Sonnet implements → Fable reviews. The plan file is the handoff artifact.</p>
+      <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/fable-orchestrated-feature-dev">Walkthrough →</a></div>
+    <div class="card"><h3>fable-repo-audit</h3><span class="cost">one deep pass</span>
+      <p>4-phase principal-level repo audit — severity-rated findings with file:line, strategy, task plan.</p>
+      <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/fable-repo-audit">Walkthrough →</a></div>
+    <div class="card"><h3>fable-org-audit</h3><span class="cost">live API probes</span>
+      <p>8-dimension integration health check of a customer org, graded 🟢🟡🔴⚫. Portable pattern + worked example.</p>
+      <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/fable-org-audit">Walkthrough →</a></div>
+    <div class="card"><h3>fable-loop-design</h3><span class="cost">design-time only</span>
+      <p>Self-correction loops with an independent verifier sub-agent, plus the cross-session memory progression.</p>
+      <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/fable-loop-design">Walkthrough →</a></div>
+  </div>
+  <h3>Workflow chain</h3>
+  <div class="cards">
     <div class="card"><h3>market-validation</h3><span class="cost">~1.5M tokens / full run</span>
       <p>Multi-angle research with live-URL verification → cited evidence pack, Tufte deck, market-map graph.</p>
       <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/market-validation">Walkthrough →</a></div>
@@ -237,6 +260,15 @@ Say the skill name to begin.</code></pre>
     <div class="card"><h3>tasks</h3><span class="cost">minimal</span>
       <p>PRD → <code>prd.json</code>: every acceptance criterion a boolean check an agent can verify alone.</p>
       <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/tasks">Walkthrough →</a></div>
+  </div>
+  <h3>Craft</h3>
+  <div class="cards">
+    <div class="card"><h3>tufte-viz</h3><span class="cost">minimal</span>
+      <p>Tufte-principled chart design and critique, with four working HTML demos as calibration examples.</p>
+      <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/tufte-viz">Walkthrough →</a></div>
+    <div class="card"><h3>ecosystem-planning</h3><span class="cost">a few parallel agents</span>
+      <p>One approvable plan across ≥3 repos: verified facts, Explore/Plan fan-out, a re-runnable definition of done.</p>
+      <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/ecosystem-planning">Walkthrough →</a></div>
   </div>
 </section>
 
@@ -264,11 +296,11 @@ Say the skill name to begin.</code></pre>
   <span class="tag">07 · The bigger picture</span>
   <h2>Part of a larger catalog.</h2>
   <div class="catalog-box">
-    <p style="margin-top:0;">This package is the <strong style="color:var(--bright);">installable half</strong> of a 12-skill
-    judgment layer. The other six — Fable&nbsp;5 orchestration (orchestrated feature-dev, repository
-    audit, org integration audit, loop design) and craft (Tufte visualization, ecosystem planning) —
-    are private, in active development, and cataloged with honest status labels on the sibling site.</p>
-    <p style="margin-bottom:0;"><a href="https://craigm26.github.io/claude-skills-site/">Browse the full catalog →</a></p>
+    <p style="margin-top:0;">All <strong style="color:var(--bright);">twelve skills install from this one marketplace</strong> —
+    a complete pattern for Fable&nbsp;5-level orchestration and organizational/operational usage.
+    The sibling catalog site presents the same twelve as a browsable portfolio: categories,
+    scenarios ("when to reach for a skill"), and per-surface install guidance (CLI, Desktop, API).</p>
+    <p style="margin-bottom:0;"><a href="https://craigm26.github.io/claude-skills-site/">Browse the catalog →</a></p>
   </div>
 </section>
 
