@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>founder-skills — a judgment layer for Claude Code</title>
+<meta name="description" content="Six Claude Code skills that calibrate a session before work begins: effort tier, model routing, and a validate → decide → spec → tasks chain. Built for Fable 5.">
+<style>
+  :root {
+    --ink: #1a1a1a; --muted: #5f5b54; --paper: #fdfcf9; --line: #e4e0d8;
+    --accent: #2f6b4f; --accent2: #3f6f80; --warn: #9a6312; --card: #ffffff;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+         font: 17px/1.65 Charter, Georgia, "Times New Roman", serif; }
+  main { max-width: 46rem; margin: 0 auto; padding: 0 1.25rem 4rem; }
+  h1, h2, h3 { font-weight: 600; line-height: 1.25; }
+  h1 { font-size: 2.1rem; margin: 0 0 .4rem; }
+  h2 { font-size: 1.45rem; margin: 3rem 0 .75rem; border-top: 1px solid var(--line); padding-top: 2rem; }
+  h3 { font-size: 1.05rem; margin: 1.5rem 0 .4rem; }
+  a { color: var(--accent2); }
+  p { margin: .7rem 0; }
+  .muted { color: var(--muted); }
+  header.hero { padding: 3.5rem 0 1rem; }
+  .kicker { font-family: var(--mono); font-size: .8rem; letter-spacing: .08em;
+            text-transform: uppercase; color: var(--accent); }
+  pre { background: #14211b; color: #d9e8df; padding: .9rem 1.1rem; border-radius: 6px;
+        overflow-x: auto; font-family: var(--mono); font-size: .85rem; line-height: 1.55; }
+  code { font-family: var(--mono); font-size: .88em; background: #efece5; padding: .08em .35em; border-radius: 3px; }
+  pre code { background: none; padding: 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .92rem; margin: 1rem 0; }
+  th, td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-family: var(--mono); font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .ask { background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+         padding: 1rem 1.2rem; margin: 1rem 0; }
+  .ask .q { font-weight: 600; margin-bottom: .5rem; }
+  .ask .opt { display: block; border: 1px solid var(--line); border-radius: 5px;
+              padding: .4rem .7rem; margin: .35rem 0; font-size: .92rem; }
+  .ask .opt b { color: var(--accent); font-weight: 600; }
+  .ask .chip { font-family: var(--mono); font-size: .7rem; text-transform: uppercase;
+               letter-spacing: .07em; color: var(--warn); }
+  .chain { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center;
+           font-family: var(--mono); font-size: .82rem; margin: 1.2rem 0; }
+  .chain span.step { background: var(--card); border: 1px solid var(--line); border-radius: 5px;
+                     padding: .35rem .6rem; }
+  .chain span.arrow { color: var(--muted); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+           gap: .8rem; margin: 1.2rem 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+          padding: .9rem 1.1rem; font-size: .92rem; }
+  .card h3 { margin: 0 0 .3rem; font-family: var(--mono); font-size: .9rem; }
+  .card .cost { font-family: var(--mono); font-size: .72rem; color: var(--warn);
+                text-transform: uppercase; letter-spacing: .05em; }
+  footer { border-top: 1px solid var(--line); margin-top: 4rem; padding-top: 1.5rem;
+           font-size: .88rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <div class="kicker">founder-skills</div>
+  <h1>A judgment layer for Claude&nbsp;Code</h1>
+  <p class="muted">Six skills that calibrate a session <em>before</em> work begins — effort tier,
+  model routing, and a validate&nbsp;→&nbsp;decide&nbsp;→&nbsp;spec&nbsp;→&nbsp;tasks chain.
+  For any builder, developer, or researcher running Claude Code with Fable&nbsp;5.</p>
+  <pre><code>/plugin marketplace add craigm26/founder-skills</code></pre>
+</header>
+
+<h2 id="why">Why this exists</h2>
+<p><strong>Token efficiency.</strong> A 30-second calibration at session start — effort tier,
+domain, what done looks like — governs how millions of downstream tokens get spent.
+Wrong-direction work and wrong-model routing are the two most expensive failure modes of an
+agentic session, and both are cheapest to prevent before the first tool call. The judgment layer
+spends a few hundred tokens to make that decision explicit.</p>
+<p><strong>Fable&nbsp;5 is a leap in intuition.</strong> A model that can genuinely judge
+<em>when</em> to plan, <em>what</em> to route where, and <em>how much</em> effort a task deserves
+makes a calibration layer worth building. These skills give that intuition a structured place to
+act — explicit, inspectable, and reusable — instead of leaving it implicit and unrepeatable
+inside each session.</p>
+
+<h2 id="before">Before you begin — three concepts</h2>
+
+<h3>1. Skills are the judgment layer</h3>
+<p>Claude Code ships powerful execution primitives. A
+<a href="https://code.claude.com/docs/en/skills">skill</a> encodes <em>when and how</em> to use
+them — under what conditions, in what order, with what routing and checks.</p>
+<table>
+  <tr><th>Primitive</th><th>What it does</th><th>Official docs</th></tr>
+  <tr><td>Subagents</td><td>Spawn focused agents from within a session</td>
+      <td><a href="https://code.claude.com/docs/en/sub-agents">Subagents</a></td></tr>
+  <tr><td>Agent SDK</td><td>Multi-agent pipelines and custom harnesses</td>
+      <td><a href="https://code.claude.com/docs/en/agent-sdk/overview">Agent SDK</a></td></tr>
+  <tr><td>AskUserQuestion</td><td>Structured questions with typed options</td>
+      <td><a href="https://code.claude.com/docs/en/interactive-mode">Interactive mode</a></td></tr>
+  <tr><td>Slash commands</td><td>Invocable workflows like the ones on this page</td>
+      <td><a href="https://code.claude.com/docs/en/slash-commands">Slash commands</a></td></tr>
+  <tr><td>Memory</td><td>Persistent context across sessions</td>
+      <td><a href="https://code.claude.com/docs/en/memory">Memory</a></td></tr>
+  <tr><td>Model routing</td><td>Opus 4.8 / Sonnet 4.6 / Haiku 4.5 tiers</td>
+      <td><a href="https://platform.claude.com/docs/en/docs/about-claude/models/overview">Models overview</a></td></tr>
+  <tr><td>Tool use</td><td>Structured tools that call APIs or run code</td>
+      <td><a href="https://platform.claude.com/docs/en/docs/agents-and-tools/tool-use/overview">Tool use</a></td></tr>
+</table>
+
+<h3>2. The planner is not the coder</h3>
+<p>These skills follow one orchestration pattern: the planning model writes an in-depth plan,
+an implementation model executes it, the planner reviews the result against the plan. The
+separation keeps the planner honest and the implementer focused. The <code>/effort</code> skill
+sets which tier each role routes to.</p>
+
+<h3>3. Token budget shapes the whole session</h3>
+<p>Opus on everything is powerful and expensive; Sonnet is fast and cost-effective; a written plan
+file can be handed to an external executor for minimal spend. The skills make that routing
+decision explicit at session start — not buried inside each task.</p>
+
+<h2 id="install">Install</h2>
+<pre><code>/plugin marketplace add craigm26/founder-skills
+
+/plugin install session-start@founder-skills   # start here
+/plugin install effort@founder-skills
+/plugin install market-validation@founder-skills
+/plugin install build-options@founder-skills
+/plugin install prd@founder-skills
+/plugin install tasks@founder-skills</code></pre>
+<p class="muted">Plugins and marketplaces are a native Claude Code feature — see
+<a href="https://code.claude.com/docs/en/plugins">Plugins</a> and
+<a href="https://code.claude.com/docs/en/plugin-marketplaces">Plugin marketplaces</a>.</p>
+
+<h2 id="session-zero">Session zero — what <code>/session-start</code> looks like</h2>
+<p>One <code>AskUserQuestion</code> call, three questions, ~30 seconds:</p>
+
+<div class="ask">
+  <div class="chip">Effort level</div>
+  <div class="q">What's the effort level for this session?</div>
+  <span class="opt"><b>Quick exploration</b> — Sonnet 4.6 throughout; spikes, research, one-off tasks</span>
+  <span class="opt"><b>Focused sprint</b> — Sonnet implements, Opus 4.8 plans and reviews</span>
+  <span class="opt"><b>Deep build</b> — Opus 4.8 throughout; architecture, high-stakes launches</span>
+  <span class="opt"><b>Constrained</b> — Sonnet only; heavy lifts hand off as plan files</span>
+</div>
+<div class="ask">
+  <div class="chip">Domain</div>
+  <div class="q">What are you working on this session?</div>
+  <span class="opt"><b>New product idea</b> · <b>Existing feature</b> · <b>Research / analysis</b> · <b>Infrastructure</b></span>
+</div>
+<div class="ask">
+  <div class="chip">Done looks like</div>
+  <div class="q">What does "done" look like at the end of this session?</div>
+  <span class="opt"><b>A decision</b> · <b>A plan file</b> · <b>Merged code</b> · <b>A shareable artifact</b></span>
+</div>
+
+<p>Then the routing announcement:</p>
+<pre><code>Effort: Focused. Planning → Opus 4.8, implementation → Sonnet 4.6.
+This session I'll route to /market-validation → /build-options.
+Say the skill name to begin.</code></pre>
+
+<h2 id="chain">The chain</h2>
+<div class="chain">
+  <span class="step">/session-start</span><span class="arrow">→</span>
+  <span class="step">/market-validation</span><span class="arrow">→</span>
+  <span class="step">/build-options</span><span class="arrow">→</span>
+  <span class="step">/prd</span><span class="arrow">→</span>
+  <span class="step">/tasks</span><span class="arrow">→</span>
+  <span class="step">implement</span><span class="arrow">→</span>
+  <span class="step">review</span>
+</div>
+<p>Each stage produces the next stage's input: a cited evidence pack → a weighted decision
+matrix → an implementation-ready PRD → a machine-verifiable task plan → code, reviewed against
+the plan. Enter wherever your work starts: an existing feature begins at <code>/prd</code>;
+research-only ends at the evidence pack.</p>
+
+<h2 id="skills">The six skills</h2>
+<div class="cards">
+  <div class="card"><h3>session-start</h3><span class="cost">~0 tokens</span>
+    <p>Three questions calibrate the session, route to a chain, surface pending memory items.</p>
+    <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/session-start">Walkthrough →</a></div>
+  <div class="card"><h3>effort</h3><span class="cost">~0 tokens</span>
+    <p>One question sets the model tier. Re-run mid-session to downgrade under token pressure.</p>
+    <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/effort">Walkthrough →</a></div>
+  <div class="card"><h3>market-validation</h3><span class="cost">~1.5M tokens / full run</span>
+    <p>Multi-angle research with live-URL verification → cited evidence pack, Tufte deck, market-map graph.</p>
+    <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/market-validation">Walkthrough →</a></div>
+  <div class="card"><h3>build-options</h3><span class="cost">~300–600k tokens</span>
+    <p>Judge-panel decision matrix over divergent options, adversarially stress-tested, with kill criteria.</p>
+    <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/build-options">Walkthrough →</a></div>
+  <div class="card"><h3>prd</h3><span class="cost">minimal</span>
+    <p>Self-clarifying PRD generator — answers its own scoping questions, shows the reasoning, writes the spec.</p>
+    <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/prd">Walkthrough →</a></div>
+  <div class="card"><h3>tasks</h3><span class="cost">minimal</span>
+    <p>PRD → <code>prd.json</code>: every acceptance criterion a boolean check an agent can verify alone.</p>
+    <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/tasks">Walkthrough →</a></div>
+</div>
+
+<h2 id="auq">The AskUserQuestion pattern</h2>
+<p>The calibration skills are built on one tool: typed questions with described options collect
+better answers, faster, than freeform prompts. Wire it into your own skills the same way:</p>
+<pre><code>AskUserQuestion({
+  questions: [{
+    header: "Short label",
+    question: "The actual question?",
+    multiSelect: false,
+    options: [
+      { label: "Option A", description: "What it means" },
+      { label: "Option B", description: "What it means" }
+    ]
+  }]
+})</code></pre>
+<p class="muted">See <a href="https://code.claude.com/docs/en/interactive-mode">Interactive mode</a>
+in the official docs.</p>
+
+<h2 id="links">Links</h2>
+<p>
+  <a href="https://github.com/craigm26/founder-skills">GitHub repository</a> ·
+  <a href="https://code.claude.com/docs/en/overview">Claude Code documentation</a> ·
+  <a href="https://code.claude.com/docs/en/skills">Skills</a> ·
+  <a href="https://code.claude.com/docs/en/plugin-marketplaces">Plugin marketplaces</a>
+</p>
+
+<footer>
+  Built by <a href="https://craigmerry.com">Craig Merry</a> · MIT licensed ·
+  <a href="https://github.com/craigm26/founder-skills">source</a> ·
+  not affiliated with Anthropic; Claude and Claude Code are Anthropic products —
+  always defer to the <a href="https://code.claude.com/docs/en/overview">official documentation</a>.
+</footer>
+
+</main>
+</body>
+</html>
