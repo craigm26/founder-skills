@@ -1,0 +1,17 @@
+{
+  "name": "fable-repo-audit",
+  "version": "0.1.0",
+  "description": "Deep, honest 4-phase repository audit: discovery and mapping → evidence-based findings with severity ratings → improvement strategy → milestone task plan with effort estimates. Grounded in file paths and line numbers; analysis only, no code changes.",
+  "author": {
+    "name": "Craig Merry",
+    "email": "craigm26@gmail.com"
+  },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": [
+    "audit",
+    "architecture",
+    "security",
+    "fable"
+  ]
+}

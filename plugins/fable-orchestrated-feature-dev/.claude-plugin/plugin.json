@@ -1,0 +1,17 @@
+{
+  "name": "fable-orchestrated-feature-dev",
+  "version": "0.1.0",
+  "description": "Fable-plan → implement → review pipeline for new features: Fable writes a detailed plan file, a capable model (Opus 4.8 / Sonnet 4.6) implements it exactly, Fable reviews the output against the spec — with an external-executor fallback when tokens are exhausted. Fable never writes implementation code.",
+  "author": {
+    "name": "Craig Merry",
+    "email": "craigm26@gmail.com"
+  },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": [
+    "orchestration",
+    "planning",
+    "review",
+    "fable"
+  ]
+}

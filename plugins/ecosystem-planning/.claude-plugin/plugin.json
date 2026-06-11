@@ -1,0 +1,17 @@
+{
+  "name": "ecosystem-planning",
+  "version": "0.1.0",
+  "description": "Produce one approvable plan that threads a hard-won lesson through a multi-repo ecosystem (libraries → core service → gateway → consumers): verified-facts discipline, parallel Explore/Plan agents, advisor review, and a re-runnable definition of done. Includes a real robotics worked example.",
+  "author": {
+    "name": "Craig Merry",
+    "email": "craigm26@gmail.com"
+  },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": [
+    "multi-repo",
+    "planning",
+    "verification",
+    "craft"
+  ]
+}

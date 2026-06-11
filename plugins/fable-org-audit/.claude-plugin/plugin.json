@@ -1,0 +1,17 @@
+{
+  "name": "fable-org-audit",
+  "version": "0.1.0",
+  "description": "Live integration audit of a customer organization on your platform: probes real API signals across eight dimensions, grades each 🟢 🟡 🔴 ⚫, and produces a prioritized gap list. Portable pattern with a worked PlatAtlas endpoint mapping; memory accumulates verified org patterns across runs.",
+  "author": {
+    "name": "Craig Merry",
+    "email": "craigm26@gmail.com"
+  },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": [
+    "audit",
+    "health-check",
+    "live-apis",
+    "fable"
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "founder-skills",
-  "description": "A judgment layer for Claude Code — session calibration, token budget routing, and a validate→spec→plan chain. Works for any builder, developer, or researcher using Claude Code with Fable 5.",
+  "description": "A judgment layer for Claude Code — 12 skills: session calibration, token budget routing, a validate→spec→plan chain, Fable 5 orchestration, and craft. Works for any builder, developer, or researcher using Claude Code with Fable 5.",
   "owner": {
     "name": "Craig Merry",
     "email": "craigm26@gmail.com"
@@ -65,6 +65,66 @@
       },
       "category": "productivity",
       "source": "./plugins/tasks",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "fable-orchestrated-feature-dev",
+      "description": "Fable-plan → implement → review pipeline for new features: Fable writes a detailed plan file, a capable model (Opus 4.8 / Sonnet 4.6) implements it exactly, Fable reviews the output against the spec — with an external-executor fallback when tokens are exhausted. Fable never writes implementation code.",
+      "author": {
+        "name": "craigm26"
+      },
+      "category": "productivity",
+      "source": "./plugins/fable-orchestrated-feature-dev",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "fable-repo-audit",
+      "description": "Deep, honest 4-phase repository audit: discovery and mapping → evidence-based findings with severity ratings → improvement strategy → milestone task plan with effort estimates. Grounded in file paths and line numbers; analysis only, no code changes.",
+      "author": {
+        "name": "craigm26"
+      },
+      "category": "productivity",
+      "source": "./plugins/fable-repo-audit",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "fable-org-audit",
+      "description": "Live integration audit of a customer organization on your platform: probes real API signals across eight dimensions, grades each 🟢 🟡 🔴 ⚫, and produces a prioritized gap list. Portable pattern with a worked PlatAtlas endpoint mapping; memory accumulates verified org patterns across runs.",
+      "author": {
+        "name": "craigm26"
+      },
+      "category": "productivity",
+      "source": "./plugins/fable-org-audit",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "fable-loop-design",
+      "description": "Design self-correction loops and multi-session memory systems for Fable 5: rubric-driven loops graded by an independent verifier sub-agent (not self-critique), and the fail → investigate → verify → distill → consult memory progression.",
+      "author": {
+        "name": "craigm26"
+      },
+      "category": "productivity",
+      "source": "./plugins/fable-loop-design",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "tufte-viz",
+      "description": "Ideate and critique data visualizations using Edward Tufte's principles — data-ink ratio, chartjunk elimination, graphical integrity, small multiples. Ships four working HTML demos (GISS temperature, Kyoto sakura, sunspot butterfly/pretty) and reference docs on analytical design.",
+      "author": {
+        "name": "craigm26"
+      },
+      "category": "productivity",
+      "source": "./plugins/tufte-viz",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "ecosystem-planning",
+      "description": "Produce one approvable plan that threads a hard-won lesson through a multi-repo ecosystem (libraries → core service → gateway → consumers): verified-facts discipline, parallel Explore/Plan agents, advisor review, and a re-runnable definition of done. Includes a real robotics worked example.",
+      "author": {
+        "name": "craigm26"
+      },
+      "category": "productivity",
+      "source": "./plugins/ecosystem-planning",
       "homepage": "https://github.com/craigm26/founder-skills"
     }
   ]

@@ -1,0 +1,17 @@
+{
+  "name": "tufte-viz",
+  "version": "0.1.0",
+  "description": "Ideate and critique data visualizations using Edward Tufte's principles — data-ink ratio, chartjunk elimination, graphical integrity, small multiples. Ships four working HTML demos (GISS temperature, Kyoto sakura, sunspot butterfly/pretty) and reference docs on analytical design.",
+  "author": {
+    "name": "Craig Merry",
+    "email": "craigm26@gmail.com"
+  },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": [
+    "data-viz",
+    "tufte",
+    "charts",
+    "craft"
+  ]
+}
