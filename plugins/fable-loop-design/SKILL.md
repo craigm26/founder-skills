@@ -32,7 +32,7 @@ Fail? → Fable reads feedback, corrects, re-runs
 
 ### Critical: use a verifier sub-agent, not self-critique
 
-Models have problems with self-critique on their own outputs. A verifier sub-agent outperforms self-critique because grading happens in an **independent context window** — the grader has no sunk cost in the prior attempt.
+Models have problems with self-critique on their own outputs. A verifier sub-agent outperforms self-critique because grading happens in an **independent context window** — the grader has no sunk cost in the prior attempt. This is Anthropic's official guidance for Fable 5: *"Separate fresh-context verifier sub-agents tend to outperform self-critique"* (the Claude model migration guide's long-running-agent recommendations).
 
 ```javascript
 // Run loop until rubric passes
@@ -80,11 +80,34 @@ A rubric is a file of **checkable criteria** — not vague goals. Each criterion
 
 | Primitive | What it gives you |
 |---|---|
+| `/goal` in Claude Code | Sets the direction for a run — the model works toward the stated goal |
 | `/loop` in Claude Code | Re-runs a prompt or slash command until you stop it; built-in loop harness |
-| `Outcomes` in Claude Managed Agents | Spawns a grader sub-agent for you; well-suited for long tasks |
+| Outcomes in Claude Managed Agents | A hosted iterate → grade → revise loop with an independent grader (see below) |
 | `Workflow` tool | Manual loop with full control over verifier prompt and schema |
 
-Use `/loop` or Outcomes for standard tasks. Use the `Workflow` tool when you need to control what the verifier sees or how feedback is formatted back to Fable.
+Use `/goal`/`/loop` or Outcomes for standard tasks. Use the `Workflow` tool when you need to control what the verifier sees or how feedback is formatted back to Fable.
+
+#### Outcomes, concretely (Managed Agents)
+
+Create a normal CMA session, then send a `user.define_outcome` event — not a session-create field,
+and don't also send a kickoff `user.message`:
+
+```json
+{
+  "type": "user.define_outcome",
+  "description": "Build a DCF model for the target company in .xlsx",
+  "rubric": { "type": "text", "content": "<markdown of independently gradeable criteria>" },
+  "max_iterations": 5
+}
+```
+
+- **Rubric is required** (`{type:"text",content}` or `{type:"file",file_id}`) — explicit, gradeable
+  criteria ("CSV has a numeric `price` column"), never vibes ("data looks good").
+- The **grader is Anthropic-managed** (you don't pick its model); progress arrives as
+  `span.outcome_evaluation_start/_ongoing/_end` events.
+- `max_iterations` defaults to **3**, max **20**. Terminal results: `satisfied`,
+  `max_iterations_reached`, `failed` (rubric contradicts the task), `interrupted`;
+  `needs_revision` starts another iteration.
 
 ### Structural vs. scalar experiments
 
@@ -138,9 +161,12 @@ memory/
 
 The key split: `rules.md` contains only **verified, distilled** facts. Raw notes go in `failures.md` and get promoted to `rules.md` only after verification.
 
-### Cross-session setup in Claude Code
+### Cross-session setup
 
-Use the auto-memory system (`~/.claude/projects/<path>/memory/`) or a project-local `memory/` directory:
+In Claude Code, use the auto-memory system (`~/.claude/projects/<path>/memory/`) or a project-local
+`memory/` directory. For hosted agents, Claude Managed Agents **memory stores** are the equivalent:
+a workspace-scoped store mounted into each session's container as a filesystem the agent reads and
+writes with ordinary file tools, with per-mutation versioning for audit and rollback.
 
 ```javascript
 // Each session starts with:
@@ -196,7 +222,7 @@ digraph loop_choice {
 
 | Goal | Tool | Key design choice |
 |---|---|---|
-| Self-correction within session | `/loop`, Outcomes, `Workflow` | Rubric file + verifier sub-agent |
+| Self-correction within session | `/goal`, `/loop`, Outcomes, `Workflow` | Rubric file + verifier sub-agent |
 | Cross-session learning | Memory filesystem | Fail → Investigate → Verify → Distill → Consult |
 | Long-running ML/research tasks | Claude Managed Agents + Outcomes | Structural experiment rubric; allow regressions |
 | Code quality hillclimbing | `/fable-repo-audit` → self-correction loop | Audit findings as rubric criteria |

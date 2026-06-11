@@ -165,6 +165,21 @@ Once Fable returns the file path:
 
 ---
 
+## The Fable 5 safety boundary (security-adjacent work)
+
+Fable 5 ships with safety classifiers (cybersecurity, biology/chemistry, model distillation) that
+can **false-positive on legitimate security-adjacent audit work** — auth flows, crypto code, exploit-
+shaped test fixtures. A classifier decline is not an error: the API returns HTTP 200 with
+`stop_reason: "refusal"` (pre-output refusals are unbilled). Design for it:
+
+- Check `stop_reason` before treating an empty result as a crash.
+- On the API, fallback is **opt-in**: the beta `fallbacks` parameter retries on Opus 4.8 server-side,
+  the SDK middleware does it client-side, or retry manually. Consumer surfaces (Claude.ai, Claude
+  Code) handle the fallback automatically.
+- A refused dimension or audit section should be *reported as refused*, not silently skipped.
+
+---
+
 ## Output Location
 
 Reports are saved to `~/.claude/audits/` by default:

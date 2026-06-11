@@ -101,6 +101,29 @@ Hand the plan file to an external executor (hand the plan file to a cheaper Clau
 
 ---
 
+## Step 3c — Hosted executor: the plan file as an Outcome rubric (Managed Agents)
+
+The plan's **acceptance criteria are already a rubric**. For long or unattended implementation runs,
+hand the plan to a Claude Managed Agents session and let the hosted iterate → grade → revise loop
+execute it:
+
+1. Extract the plan's acceptance criteria into a markdown rubric (each criterion independently
+   gradeable — the same machine-verifiable discipline the `tasks` skill enforces).
+2. Create a CMA session (agent + environment + the repo mounted as a resource), then send:
+   ```json
+   { "type": "user.define_outcome",
+     "description": "Implement the feature exactly as specified in /workspace/repo/<plan>.md",
+     "rubric": { "type": "text", "content": "<the acceptance criteria as markdown>" },
+     "max_iterations": 5 }
+   ```
+3. An Anthropic-managed grader scores each iteration against the rubric and feeds gaps back;
+   the loop ends `satisfied`, `max_iterations_reached` (default 3, max 20), or `failed`.
+
+This replaces Step 4's manual review with a built-in grading loop — still run Fable's review for
+judgment calls the rubric can't capture.
+
+---
+
 ## Step 4 — Fable reviews (Opus/Sonnet path only)
 
 After implementation completes, invoke Fable to review against the plan:

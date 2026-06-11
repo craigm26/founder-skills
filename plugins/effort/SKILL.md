@@ -59,6 +59,22 @@ If you observe token pressure mid-session (context approaching limits, user ment
 
 ---
 
+## Related API primitives (don't confuse them with this skill)
+
+This skill routes **which model** handles each role for the session. The Claude API has two
+*per-request* controls with similar names:
+
+| Primitive | What it controls |
+|---|---|
+| `output_config.effort` (`low`/`medium`/`high`/`xhigh`/`max`) | Thinking depth and token spend within one request |
+| Task Budgets (`output_config.task_budget`, beta `task-budgets-2026-03-13`, min 20,000 tokens) | A model-visible token countdown for a whole agentic loop — the model self-moderates |
+
+Useful, officially documented fact for the Constrained tier: on Fable 5, **lower effort settings
+still perform very well — often exceeding the `xhigh`/`max` performance of previous models** — so
+dialing effort down is a legitimate budget lever before downgrading models.
+
+---
+
 ## Model reference
 
 | Model | Best for | Token cost |

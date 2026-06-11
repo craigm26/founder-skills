@@ -17,6 +17,11 @@ Converts a PRD markdown document into the prd.json format for the execution loop
 4. Order by dependencies (schema → backend → UI → tests)
 5. Output to the specified prd.json location
 
+**Outcome rubrics:** Because every acceptance criterion is a boolean check, a `prd.json` task's
+criteria can be exported directly as a Claude Managed Agents **Outcome rubric** (`user.define_outcome`
+requires "explicit, independently gradeable criteria" — exactly this format). See
+`/fable-orchestrated-feature-dev` Step 3c for the hosted-executor flow.
+
 **Autonomous mode:** Do not ask questions. Use the PRD content and any provided context (branch name, output path) to generate prd.json immediately.
 
 ---

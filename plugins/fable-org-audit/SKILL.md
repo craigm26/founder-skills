@@ -133,6 +133,37 @@ Agent({
 
 ---
 
+## Scheduling the cadence
+
+"Weekly for active orgs" needs a real trigger, not an intention. Two documented mechanisms:
+
+- **Claude Code `/schedule` (routines)** — a saved configuration that runs on Anthropic-managed
+  cloud infrastructure on a cron cadence; your laptop can be off. Good default for a solo operator:
+  `/schedule weekly Monday 7am — run /fable-org-audit for org <slug>, post the summary`.
+- **Claude Managed Agents scheduled deployments** — `deployments.create()` with a cron expression +
+  IANA timezone; every firing creates a session and writes a `deployment_run` record (with a typed
+  error when session creation fails), so missed audits are auditable. Test with the manual
+  `deployments.run()` endpoint before committing to the schedule.
+
+Either way, the audit's memory file is what makes the recurring run compound instead of repeat.
+
+---
+
+## The Fable 5 safety boundary (security-adjacent work)
+
+Fable 5 ships with safety classifiers (cybersecurity, biology/chemistry, model distillation) that
+can **false-positive on legitimate security-adjacent audit work** — auth flows, crypto code, exploit-
+shaped test fixtures. A classifier decline is not an error: the API returns HTTP 200 with
+`stop_reason: "refusal"` (pre-output refusals are unbilled). Design for it:
+
+- Check `stop_reason` before treating an empty result as a crash.
+- On the API, fallback is **opt-in**: the beta `fallbacks` parameter retries on Opus 4.8 server-side,
+  the SDK middleware does it client-side, or retry manually. Consumer surfaces (Claude.ai, Claude
+  Code) handle the fallback automatically.
+- A refused dimension or audit section should be *reported as refused*, not silently skipped.
+
+---
+
 ## Memory Pattern for Org Audits
 
 Apply the full fail → investigate → verify → distill → consult progression:

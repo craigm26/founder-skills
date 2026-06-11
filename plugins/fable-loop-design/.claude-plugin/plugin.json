@@ -1,6 +1,6 @@
 {
   "name": "fable-loop-design",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Design self-correction loops and multi-session memory systems for Fable 5: rubric-driven loops graded by an independent verifier sub-agent (not self-critique), and the fail → investigate → verify → distill → consult memory progression.",
   "author": {
     "name": "Craig Merry",
