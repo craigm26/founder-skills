@@ -2,7 +2,7 @@ import json, subprocess, sys, pathlib, tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 GOLDEN = ROOT / "references/example-shiftmate/deck-data.json"
-EMIT = ROOT / "assets/platatlas/emit_atlas.py"
+EMIT = ROOT / "assets/market-map/emit_market_map.py"
 
 
 def _run(data_path):

@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-"""Emit a workflow-atlas (nodes.json + flows.json) from a market-validation deck-data.json.
+"""Emit a market-map graph (nodes.json + flows.json) from a market-validation deck-data.json.
 
-Usage: emit_atlas.py <deck-data.json> <out-dir>
+Usage: emit_market_map.py <deck-data.json> <out-dir>
 
-Produces the exact shape workflow-atlas consumes (see references/workflow-atlas-schema.md,
-grounded in the repo's docs/examples/workflow-atlas/{nodes,flows}.json):
+Output contract (see references/market-map-schema.md):
 
   nodes.json = { "families": [{id,label,color}], "nodes": [{id,label,family,kind,...}] }
   flows.json = { "flows":    [{id,title,view,tags,summary,steps:[{from,to,label,...}]}] }
 
-Mapping (spec §6):
+Mapping:
   families  = competitor tiers (from deck-data.categories) + "process" + "policy"
   nodes     = one "market" hub + one node per competitor (family = its tier) +
               optional process-step nodes (if deck-data has a `process.steps` block) +
@@ -17,9 +16,9 @@ Mapping (spec §6):
   flows     = "competitive-landscape" (fanout: market -> each competitor) always;
               "target-process" (sequence) only when explicit process steps are provided.
 
-NOTE: the JSON shape is validated against the parser's expected format, but the end-to-end
-load+render path (register atlas row -> drop JSON -> refresh -> GET graph) is UNTESTED — see
-references/workflow-atlas-schema.md (spec R3). Treat output as "shape-valid, load-untested".
+The shape is a generic families/nodes/flows graph: self-contained, referentially checked
+before writing, and loadable into any compatible viewer or converter — see
+references/sinks.md for wiring it into a destination.
 """
 import json, re, sys, pathlib
 
@@ -38,7 +37,7 @@ def slug(t, seen):
 
 def main():
     if len(sys.argv) < 3:
-        print("usage: emit_atlas.py <deck-data.json> <out-dir>", file=sys.stderr); sys.exit(2)
+        print("usage: emit_market_map.py <deck-data.json> <out-dir>", file=sys.stderr); sys.exit(2)
     data = json.loads(pathlib.Path(sys.argv[1]).read_text())
     out = pathlib.Path(sys.argv[2]); out.mkdir(parents=True, exist_ok=True)
 
@@ -118,7 +117,7 @@ def main():
     (out / "flows.json").write_text(json.dumps({"flows": flows}, indent=2, ensure_ascii=False))
     print("nodes.json", len(nodes), "nodes,", len(families), "families")
     print("flows.json", len(flows), "flows")
-    print("NOTE: shape-valid; end-to-end load+render UNTESTED (see workflow-atlas-schema.md, spec R3)")
+    print("NOTE: shape-valid market map; see references/sinks.md for loading it into a viewer")
 
 
 if __name__ == "__main__":
