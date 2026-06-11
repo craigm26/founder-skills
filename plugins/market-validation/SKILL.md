@@ -3,7 +3,7 @@ name: market-validation
 description: >-
   Validate whether there is a real market for a product idea, end to end: scope questions → a multi-angle
   web-research workflow with mandatory live-URL verification → a cited evidence pack → a Tufte HTML deck +
-  PDF + PPTX → a build/integrate brief and an emitted workflow-atlas market map. Use when the
+  PDF + PPTX → a build/integrate brief and an emitted market-map graph. Use when the
   user asks "is there a market for X", "validate demand for", "prove the market for", "should I build X",
   "market research / competitor + willingness-to-pay evidence for X", or wants a fundable evidence pack.
 ---
@@ -68,25 +68,26 @@ markdown evidence pack (the workflow's `report`) as the durable write-up.
 - Produces `<slug>.html` (always; self-contained Tufte deck, clickable citations, in-page Save-PDF /
   Export-PPTX buttons), `<slug>.pptx` (if python-pptx importable, else `PPTX_SKIPPED`), and `<slug>.pdf`
   (if `--pdf` and chromium present, else `PDF_SKIPPED`).
-- A python with python-pptx: `~/.rebateops-viz-venv/bin/python`, or create one
+- A python with python-pptx — create a venv if needed
   (`python3 -m venv ~/.mv-venv && ~/.mv-venv/bin/pip install python-pptx`). The HTML alone satisfies
   "export to PDF/PPTX" via its buttons, so missing python-pptx/chromium is not fatal — report what was made.
 
 ## Phase 4 — Decide & integrate
-1. **Emit the workflow-atlas market map:**
+1. **Emit the market-map graph:**
    ```
-   python3 <skill-dir>/assets/platatlas/emit_atlas.py deck-data.json <out-dir>/atlas
+   python3 <skill-dir>/assets/market-map/emit_market_map.py deck-data.json <out-dir>/market-map
    ```
-   Produces `nodes.json` + `flows.json` for a repo's `docs/workflows/`. **Describe these as "shape-valid;
-   end-to-end load UNTESTED"** unless `references/workflow-atlas-schema.md` records a passed load round-trip
-   (spec R3). Do not claim the atlas "works in workflow-atlas today."
-2. **Write the build/integrate brief** by filling `assets/platatlas/brief.template.md` from the evidence
-   pack — including the **Project-2 spec stub** (a new `POST …/atlases/import` endpoint so the map becomes
-   one-click). Project 2 is its own brainstorm → build cycle; this skill only emits the JSON + the stub.
+   Produces `nodes.json` + `flows.json` — the competitive landscape and target process as a small graph
+   (contract in `references/market-map-schema.md`). Loading it into a viewer or platform is sink-specific:
+   see `references/sinks.md`. **Describe the output as "shape-valid; loading is the sink's to verify"** —
+   never claim a specific platform integration "works today" without having run it.
+2. **Write the build/integrate brief** by filling `assets/market-map/brief.template.md` from the evidence
+   pack. If the map is destined for a platform without a write API, the brief's "follow-on work" stub names
+   that import path as its own project — this skill only emits the JSON + the stub.
 
 ## Deliverables of a run
-`deck-data.json`, the markdown evidence pack, `<slug>.html` (+ `.pdf`/`.pptx` if produced), `atlas/nodes.json`
-+ `atlas/flows.json`, and the build/integrate brief. Surface them to the user (SendUserFile).
+`deck-data.json`, the markdown evidence pack, `<slug>.html` (+ `.pdf`/`.pptx` if produced),
+`market-map/nodes.json` + `market-map/flows.json`, and the build/integrate brief. Surface them to the user (SendUserFile).
 
 ## Known limitations (keep your honesty consistent)
 - **The generalized workflow is syntax-checked only — its first real invocation is its proving run.**
@@ -94,18 +95,20 @@ markdown evidence pack (the workflow's `report`) as the durable write-up.
   `{ report, survivors[], competitors[], droppedCount }`, but it has only ever executed in its earlier
   *hardcoded* form. On the first run, confirm `args.angles` actually flows into the investigator prompts and
   that the returned `survivors`/`competitors` match what Phase 2 consumes — before trusting the ~1.5M-token output.
-- **The emitted atlas is shape-valid but load-untested** (spec R3 / `references/workflow-atlas-schema.md`).
-  Do not tell the user it "works in workflow-atlas today."
+- **The emitted market map is shape-valid; no sink's load path is verified by this skill**
+  (`references/market-map-schema.md` + `references/sinks.md`). Do not tell the user a specific
+  platform integration "works today."
 - **Phase 2 (report → `deck-data.json`) is a manual seam.** No code automates it; lean hard on the golden example.
 
 ## References
 - `references/verification-discipline.md` — the non-negotiable rules (read first).
-- `references/workflow-atlas-schema.md` — the atlas output contract + the unproven load path.
+- `references/market-map-schema.md` — the market-map output contract.
+- `references/sinks.md` — where the emitted map can go (generic + worked example).
 - `references/example-shiftmate/` — a full worked example (`deck-data.json` + `brief.md`) to mirror.
 
 ## Tests
 - `python3 -m pytest <skill-dir>/tests -q` — smoke-tests the deck generator (full + minimal data) and the
-  atlas emitter (shape + referential integrity). Run after editing `build_deck.py` or `emit_atlas.py`.
+  market-map emitter (shape + referential integrity). Run after editing `build_deck.py` or `emit_market_map.py`.
 - `node --test '<skill-dir>/tests/js/*.test.mjs'` — exercises `assets/research-workflow.js` via a harness
   (`tests/js/harness.mjs`) that replicates the Workflow runtime (wraps the script body in an async function
   and injects stubbed `agent`/`parallel`/`phase`/`log`/`args`). Covers the investigator retry / looser-schema

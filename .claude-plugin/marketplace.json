@@ -10,7 +10,9 @@
     {
       "name": "session-start",
       "description": "Judgment layer entry point — three AskUserQuestion prompts establish effort tier, domain, and skill routing before any work begins. Start every session here.",
-      "author": { "name": "craigm26" },
+      "author": {
+        "name": "craigm26"
+      },
       "category": "productivity",
       "source": "./plugins/session-start",
       "homepage": "https://github.com/craigm26/founder-skills"
@@ -18,15 +20,19 @@
     {
       "name": "effort",
       "description": "Single-question token budget calibrator — sets Opus 4.8 / Sonnet 4.6 / Codex routing tier for the session. Downstream skills inherit this choice.",
-      "author": { "name": "craigm26" },
+      "author": {
+        "name": "craigm26"
+      },
       "category": "productivity",
       "source": "./plugins/effort",
       "homepage": "https://github.com/craigm26/founder-skills"
     },
     {
       "name": "market-validation",
-      "description": "Validate whether there is a real market for a product idea: multi-angle web research with live-URL verification → cited evidence pack → Tufte HTML deck + PDF/PPTX → a build/integrate brief and an emitted workflow-atlas market map.",
-      "author": { "name": "craigm26" },
+      "description": "Validate whether there is a real market for a product idea: multi-angle web research with live-URL verification → cited evidence pack → Tufte HTML deck + PDF/PPTX → a build/integrate brief and an emitted market-map graph.",
+      "author": {
+        "name": "craigm26"
+      },
       "category": "productivity",
       "source": "./plugins/market-validation",
       "homepage": "https://github.com/craigm26/founder-skills"
@@ -34,7 +40,9 @@
     {
       "name": "build-options",
       "description": "Decide what to build after a market is validated: divergent options → independent judge-panel weighted decision matrix → adversarial stress-test → a recommended build with kill criteria. Chains into prd → tasks.",
-      "author": { "name": "craigm26" },
+      "author": {
+        "name": "craigm26"
+      },
       "category": "productivity",
       "source": "./plugins/build-options",
       "homepage": "https://github.com/craigm26/founder-skills"
@@ -42,7 +50,9 @@
     {
       "name": "prd",
       "description": "Generate a Product Requirements Document for a new feature: self-clarify the open questions, then produce a clear, actionable, implementation-ready PRD. Chains after build-options and into tasks.",
-      "author": { "name": "craigm26" },
+      "author": {
+        "name": "craigm26"
+      },
       "category": "productivity",
       "source": "./plugins/prd",
       "homepage": "https://github.com/craigm26/founder-skills"
@@ -50,7 +60,9 @@
     {
       "name": "tasks",
       "description": "Convert a PRD markdown file into a prd.json task plan: extract tasks and explode each into granular, machine-verifiable sub-tasks with acceptance criteria. Chains after prd.",
-      "author": { "name": "craigm26" },
+      "author": {
+        "name": "craigm26"
+      },
       "category": "productivity",
       "source": "./plugins/tasks",
       "homepage": "https://github.com/craigm26/founder-skills"

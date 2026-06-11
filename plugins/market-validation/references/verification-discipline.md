@@ -25,13 +25,13 @@ Snippet-only or vendor-marketing claims are explicitly flagged as weaker (not pr
 is stated as HIGH/MODERATE/LOW per major claim.
 
 ## 5. Single source of truth
-One canonical `deck-data.json` drives every artifact (deck.html, .pdf, .pptx, atlas JSON, brief). Never let
+One canonical `deck-data.json` drives every artifact (deck.html, .pdf, .pptx, market-map JSON, brief). Never let
 the deck, the PPTX, and the report drift — generate them all from the same object.
 
 ## 6. Apply your own discipline to your own claims
 When you assert how an artifact integrates ("this loads into X today"), verify it the same way you verify
 research claims. If you only *read* that a path works but never *ran* it, say "described, untested" — see
-`workflow-atlas-schema.md` for the live example (the atlas load path is shape-valid but load-untested).
+`sinks.md` for the standing example (an emitted map is shape-valid; each sink's load path is untested until run).
 
 ## Tufte checklist for the deck
 - Maximize data-ink; zero chartjunk. Default grayscale; colour only to encode meaning (durable/frozen/tier).

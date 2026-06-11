@@ -14,19 +14,19 @@ Confidence: {{confidence_line}}
 What the evidence DOES prove vs. does NOT:
 {{model_caveat}}
 
-## How it integrates with workflow-atlas (workflow-atlas)
-- **Surface:** {{platatlas_surface}}  <!-- agent? atlas? console feature? -->
-- **Emitted now:** a market-map atlas (`nodes.json` + `flows.json`) for `docs/workflows/`. Status:
-  **{{atlas_status}}** (see references/workflow-atlas-schema.md — shape-valid; end-to-end load may be untested).
+## The market map
+- **Emitted now:** a market-map graph (`nodes.json` + `flows.json`) — the competitive landscape and
+  target process as a small, referentially-checked graph (contract: `references/market-map-schema.md`).
+- **Destination:** {{map_destination}}  <!-- where this map will live: repo docs/, a graph viewer, a platform — see references/sinks.md -->
+- **Status:** {{map_status}}  <!-- always honest: "shape-valid; load into <sink> untested" unless you ran it -->
 
-## Project 2 — new workflow-atlas feature (spec stub)
-The net-new platform work this run justifies (its own brainstorm → spec → build cycle):
+## Follow-on work — making the map one-click (spec stub)
+The net-new integration work this run justifies (its own brainstorm → spec → build cycle):
 
-- **Goal:** {{project2_goal}}
-- **Endpoint:** `POST /api/orgs/:slug/atlases/import` — accept `{ families, nodes, flows }`; validate against
-  the Rust/TS serde schema; upsert into D1 `atlases`/`nodes`/`flows`; return atlas id + 201.
-- **Auth:** reuse `requireEntitledMember` (membership + entitlement); **audit** action `atlas.import`.
-- **Why net-new:** today there is no write API for atlases/nodes/flows (only `POST /api/traces`); this makes
-  emitted evidence-map atlases one-click instead of a manual file drop.
-- **Acceptance:** round-trip — import JSON → `GET /api/orgs/:slug/atlases/:id/graph` renders the nodes+edges.
-- **Out of scope for the skill:** the skill emits the JSON + this stub; building the endpoint is Project 2.
+- **Goal:** {{followon_goal}}
+- **Shape:** an import path in the destination system that accepts `{ families, nodes, flows }`,
+  validates against the schema, persists, and renders — so emitted maps load in one step instead of
+  a manual file drop.
+- **Acceptance:** round-trip — import the JSON → the destination renders the nodes + edges.
+- **Out of scope for the skill:** the skill emits the JSON + this stub; building the import path is
+  the follow-on project.
