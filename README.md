@@ -1,40 +1,185 @@
 # founder-skills
 
-Claude Code skills for founders and builders: **validate whether a market is real, decide what to build, then spec and plan it** — with cited research, an auditable decision matrix, and an implementation-ready PRD → task plan.
+**A judgment layer for Claude Code** — six skills that sit above Anthropic's execution primitives
+and tell the model *when* to plan, *which model* to use, and *how* to structure work across a session.
 
-This repo is a [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces) hosting installable plugins, one per skill.
+Started as a founder's research-to-spec chain. Generalized into a starter package for any builder,
+developer, or researcher using Claude Code with Fable 5.
+
+---
+
+## Before you begin
+
+Three concepts to understand before installing:
+
+### 1. Skills are the judgment layer
+
+Claude Code ships with powerful orchestration primitives. Skills encode *when and how* to use them:
+
+| Anthropic primitive | What it does | Docs |
+|---|---|---|
+| `Agent()` | Spawn a subagent from within a session | [Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) |
+| `Workflow` tool | Fan-out multi-agent pipelines with deterministic control flow | [Workflows](https://docs.anthropic.com/en/docs/claude-code/sdk#workflows) |
+| `AskUserQuestion` | Structured clarifying questions with typed options | Built into Claude Code |
+| `/loop`, `/schedule` | Recurring tasks and cron-scheduled cloud agents | [Slash commands](https://docs.anthropic.com/en/docs/claude-code/slash-commands) |
+| Model routing | Opus 4.8 / Sonnet 4.6 / Haiku 4.5 / Codex `/goal` | [Models overview](https://docs.anthropic.com/en/docs/about-claude/models/overview) |
+| Tool use | Give Claude structured tools that call APIs or run code | [Tool use](https://docs.anthropic.com/en/docs/build-with-claude/tool-use) |
+
+A skill doesn't replace any of these. It tells Claude: *under what conditions to invoke them, in what order, with what routing, and with what checks*. Think of it as the judgment layer on top of the execution layer.
+
+### 2. Fable 5 is the planner — not the coder
+
+These skills are designed around the Fable 5 orchestration pattern:
+
+```
+Fable plans  →  Opus 4.8 or Sonnet 4.6 implements  →  Fable reviews
+```
+
+Fable (the model running the skill) writes an in-depth plan, hands it to an implementation model,
+then reviews the output against the plan. It never writes implementation code itself. This separation
+produces better results than having one model do everything: the planner stays honest, the implementer
+stays focused.
+
+The `/effort` skill sets which model tier to route to. Every downstream skill respects that choice.
+
+### 3. Token budget shapes the whole session
+
+Running Opus on everything is powerful and expensive. Running Sonnet is fast and cost-effective.
+Codex (`/goal <plan-path>`) executes a written plan with minimal Claude token spend. These skills
+make the routing decision **explicit** — at session start, not buried inside each skill.
+
+---
 
 ## Install
 
-```
+```bash
 /plugin marketplace add craigm26/founder-skills
+```
+
+Install specific skills:
+```bash
+/plugin install session-start@founder-skills   # start here — calibrates every session
+/plugin install effort@founder-skills          # set token budget tier
 /plugin install market-validation@founder-skills
 /plugin install build-options@founder-skills
 /plugin install prd@founder-skills
 /plugin install tasks@founder-skills
 ```
 
-Install any subset, or all for the full validate → build → spec → plan chain. Then just talk to Claude Code naturally — the skills activate on intent.
-
-## The chain
-
-```
-market-validation  →  build-options  →  prd  →  tasks  →  build
-   (is it real?)       (what to build)   (spec)  (plan)   (execute)
+Or install all six:
+```bash
+for skill in session-start effort market-validation build-options prd tasks; do
+  /plugin install ${skill}@founder-skills
+done
 ```
 
-## Plugins
+---
 
-| Plugin | What it does | Triggers |
+## The walkthrough
+
+### Session zero — calibrate
+
+Every session starts with two calls:
+
+```
+/session-start    ← three AskUserQuestion prompts: effort tier, domain, done-looks-like
+/effort           ← or skip if session-start already set it
+```
+
+`/session-start` reads your memory (pending items from prior sessions), asks three structured
+questions, then announces which skills to use and which model tier is active. Takes 30 seconds.
+Prevents an hour of wrong-direction work.
+
+### The full chain (new product idea)
+
+```
+/effort              →  set token budget
+/session-start       →  establish goal + route to chain
+/market-validation   →  is there a real market? (cited evidence pack, ~1.5M tokens)
+/build-options       →  what should I build? (judge-panel decision matrix)
+/prd                 →  write the spec
+/tasks               →  break spec into a prd.json task plan
+                     →  hand to Sonnet/Opus for implementation
+                     →  Fable reviews against the plan
+```
+
+### Existing feature
+
+```
+/effort → /prd → /tasks → implement → Fable reviews
+```
+
+### Research or analysis
+
+```
+/effort → /market-validation (research-only mode) → artifact
+```
+
+### Architecture or multi-repo scope
+
+```
+/effort → /ecosystem-planning* → /session-start per workstream
+```
+
+*`ecosystem-planning` lives in the private `craigm26/claude-skills` repo — link below.
+
+---
+
+## Skills
+
+| Skill | Invoke | What it does |
 |---|---|---|
-| **market-validation** | Multi-angle web research with **live-URL verification** → cited evidence pack → Tufte HTML deck + PDF/PPTX → a build/integrate brief + workflow-atlas market map. | "is there a market for X", "validate demand for", "should I build X" |
-| **build-options** | Divergent options → independent **judge-panel weighted decision matrix** → adversarial stress-test → a recommended build with **kill criteria** → Tufte matrix → hands to `prd`. | "what should I build", "what are my build options" |
-| **prd** | Self-clarify the open questions, then generate a clear, actionable, implementation-ready **Product Requirements Document**. | "create a prd", "write prd for", "spec out" |
-| **tasks** | Convert a PRD markdown file into a **prd.json** task plan — granular, machine-verifiable sub-tasks with acceptance criteria. | "convert prd", "create tasks", "prd to json" |
+| **session-start** | `/session-start` | Three AskUserQuestion prompts — effort tier, domain, done-looks-like. Routes to the right skill chain. Loads memory. **Start here every session.** |
+| **effort** | `/effort` | Single-question token budget selector. Sets Opus / Sonnet / Codex routing for the session. Can be called mid-session to downgrade. |
+| **market-validation** | `/market-validation` | Multi-angle web research with live-URL verification → cited evidence pack → Tufte HTML deck + PDF/PPTX → build brief. ~1.5M tokens for a full run. |
+| **build-options** | `/build-options` | Divergent options → independent judge-panel weighted decision matrix → adversarial stress-test → recommended build with kill criteria → hands to `prd`. |
+| **prd** | `/prd` | Self-clarify open questions, then generate a clear implementation-ready Product Requirements Document. |
+| **tasks** | `/tasks` | Convert a PRD markdown file into a `prd.json` task plan — granular, machine-verifiable sub-tasks with acceptance criteria. |
+
+---
+
+## AskUserQuestion reference
+
+`AskUserQuestion` is the tool these skills use to collect structured input. It presents typed options
+(single or multi-select) with descriptions, which produces faster and more useful answers than
+freeform prompts. The session-start and effort skills show the pattern in action.
+
+You can wire your own AskUserQuestion calls into any Claude Code skill using the same format:
+
+```
+AskUserQuestion({
+  questions: [{
+    header: "Short label (≤12 chars)",
+    question: "The actual question?",
+    multiSelect: false,
+    options: [
+      { label: "Option A", description: "What it means" },
+      { label: "Option B", description: "What it means" }
+    ]
+  }]
+})
+```
+
+See the [Claude Code tool reference](https://docs.anthropic.com/en/docs/claude-code/sdk) for details.
+
+---
 
 ## Worked example
 
-`market-validation` and `build-options` ship a worked example built around a **fictional** product, **ShiftMate** (a shift-swap marketplace for hourly workers), validated against the real, public shift-scheduling market. It's illustrative — see each plugin's `references/example-shiftmate/`.
+`market-validation` and `build-options` ship a worked example built around **ShiftMate** — a
+fictional shift-swap marketplace for hourly workers, validated against the real scheduling market.
+See each plugin's `references/example-shiftmate/`.
+
+---
+
+## Related skills (private repo)
+
+The private `craigm26/claude-skills` repo extends this judgment layer with Fable 5 orchestration
+skills: `fable-orchestrated-feature-dev`, `fable-repo-audit`, `fable-org-audit`, `fable-loop-design`,
+`ecosystem-planning`, and `tufte-viz`. These are paired with the public chain — the chain produces
+specs; the orchestration skills execute and review them.
+
+---
 
 ## Develop / test
 
@@ -45,24 +190,16 @@ cd plugins/market-validation && python3 -m pytest -q tests/
 cd plugins/build-options     && python3 -m pytest -q tests/
 ```
 
-## Adding a new skill to this marketplace
-
-**Fastest — use the helper** (scaffolds the plugin, registers it in this marketplace *and* the RobotRegistryFoundation cross-list, symlinks it into `~/.claude/skills/`, and validates):
+## Adding a new skill
 
 ```bash
-# import an existing skill from ~/.claude/skills/<name>, or scaffold a stub:
 scripts/add-skill.sh <name> --desc "one-line description with triggers"
-# other options: --from <dir>   --category <cat>   --no-cross-list
 ```
 
-It prints the `git commit && push` commands to run for each repo (it never pushes for you). Re-running for an existing name is a no-op.
+Scaffolds the plugin, registers it in this marketplace, symlinks it into `~/.claude/skills/`, and
+validates. Prints the `git commit && push` commands — it never pushes for you.
 
-**Manual equivalent:**
-1. Create `plugins/<name>/` with `SKILL.md` at its root (plus optional `assets/`, `references/`, `tests/`).
-2. Add `plugins/<name>/.claude-plugin/plugin.json` (`name`, `version`, `description`, `author`, `homepage`, `license: MIT`).
-3. Add an entry to `.claude-plugin/marketplace.json` with `"source": "./plugins/<name>"`.
-4. Validate: `claude plugin validate plugins/<name> --strict && claude plugin validate .`
-5. Commit + push. Installers update with `/plugin marketplace update founder-skills`.
+---
 
 ## License
 

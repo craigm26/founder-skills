@@ -1,0 +1,9 @@
+{
+  "name": "session-start",
+  "version": "0.1.0",
+  "description": "Judgment layer entry point — calibrates effort tier, goal, and skill routing at the start of any session before work begins.",
+  "author": { "name": "Craig Merry", "email": "craigm26@gmail.com" },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": ["session", "effort", "routing", "judgment", "fable", "planning"]
+}
