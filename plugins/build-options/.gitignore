@@ -3,4 +3,5 @@ __pycache__/
 *.pdf
 *.pptx
 *.html
+!assets/matrix.template.html
 .pytest_cache/

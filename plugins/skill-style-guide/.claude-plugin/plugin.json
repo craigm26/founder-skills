@@ -1,0 +1,19 @@
+{
+  "name": "skill-style-guide",
+  "version": "0.1.0",
+  "description": "A written house style for Claude Code skill-marketplace SKILL.md and README.md files — frontmatter rules, trigger-rich descriptions, body skeletons, honesty sections, a six-section README template, and a conformance checklist calibrated against your repo's own golden examples.",
+  "author": {
+    "name": "Craig Merry",
+    "email": "craigm26@gmail.com"
+  },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": [
+    "style-guide",
+    "skills",
+    "marketplace",
+    "conformance",
+    "authoring",
+    "checklist"
+  ]
+}

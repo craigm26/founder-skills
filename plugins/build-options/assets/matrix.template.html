@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decision matrix</title>
+<style>
+  :root{ --paper:#fffff8; --ink:#1a1a1a; --soft:#55514a; --grn:#2f6b4f; --rule:#d8d4c8; --warn:#9a3b2e; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; background:var(--paper); color:var(--ink);
+    font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif; line-height:1.5; }
+  .wrap{ max-width:1100px; margin:0 auto; padding:48px 32px 80px; }
+  h1{ font-size:30px; line-height:1.15; margin:0 0 6px; font-weight:700; }
+  .sub{ font-size:18px; color:var(--soft); margin:0 0 14px; font-style:italic; }
+  .prov{ font-size:12.5px; color:var(--soft); margin:0 0 18px; }
+  .pill{ display:inline-block; background:var(--grn); color:#fffff8; font-size:13px; font-weight:700;
+    padding:5px 12px; border-radius:14px; margin-bottom:26px; font-family:-apple-system,system-ui,sans-serif; }
+  h2{ font-size:13px; letter-spacing:.09em; text-transform:uppercase; color:var(--grn);
+    border-bottom:1px solid var(--rule); padding-bottom:5px; margin:34px 0 14px; font-weight:700; }
+  .rec{ background:rgba(47,107,79,.06); border-left:3px solid var(--grn); padding:16px 20px; margin:0 0 8px; }
+  .rec .win{ font-size:20px; font-weight:700; margin:0 0 2px; }
+  .rec .conf{ font-size:13px; color:var(--soft); font-family:-apple-system,system-ui,sans-serif; margin-bottom:10px; }
+  .rec p{ margin:8px 0; font-size:15px; }
+  ul{ margin:8px 0; padding-left:20px; } li{ margin:6px 0; font-size:14.5px; }
+  table{ border-collapse:collapse; width:100%; font-size:12.5px;
+    font-family:-apple-system,system-ui,sans-serif; margin-top:6px; }
+  th,td{ padding:7px 8px; text-align:center; border-bottom:1px solid var(--rule); }
+  th{ font-size:11px; color:var(--soft); font-weight:600; vertical-align:bottom; }
+  th .w{ display:block; font-size:10px; color:var(--grn); font-weight:700; }
+  td.opt{ text-align:left; font-family:Georgia,serif; font-size:13.5px; max-width:230px; }
+  td.opt .lens{ display:block; font-size:11px; color:var(--soft); font-style:italic; }
+  td.total{ font-weight:700; font-size:14px; }
+  tr.win-row td{ background:rgba(47,107,79,.08); }
+  .cell{ display:inline-block; min-width:30px; padding:2px 6px; border-radius:3px; color:#1a1a1a; }
+  .sp{ color:var(--warn); font-weight:700; } /* spread flag */
+  .adv-killed{ color:var(--warn); font-weight:700; }
+  .adv-wounded{ color:#9a6a2e; font-weight:700; }
+  .adv-survive{ color:var(--grn); font-weight:700; }
+  .note{ font-size:13px; color:var(--soft); margin:10px 0; }
+  .tie{ background:#fbf2dd; border-left:3px solid #b8902e; padding:10px 14px; font-size:14px; margin:10px 0; }
+  .foot{ font-size:11.5px; color:var(--soft); margin-top:30px; border-top:1px solid var(--rule); padding-top:10px; }
+  @media print{ .wrap{ padding:24px; } a{ color:inherit; text-decoration:none; } }
+</style>
+</head>
+<body>
+<div class="wrap" id="root"></div>
+<script>
+const DECISION_DATA = /*__DECISION_DATA__*/ null;
+(function(){
+  const d = DECISION_DATA;
+  const root = document.getElementById('root');
+  if(!d){ root.textContent = 'No decision data.'; return; }
+  const esc = s => String(s==null?'':s).replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const byId = Object.fromEntries(d.options.map(o=>[o.id,o]));
+  const crit = d.criteria;
+  // green heat for a 0-5 value; invert for lower-is-better criteria
+  function heat(v, higher){ if(v==null) return 'transparent';
+    const t = (higher===false ? (5-v) : v)/5; // 0..1 goodness
+    const r=Math.round(255-(255-47)*t), g=Math.round(255-(255-107)*t), b=Math.round(248-(248-79)*t);
+    return `rgba(${r},${g},${b},0.85)`; }
+
+  const rec = d.recommendation||{}; const win = byId[rec.optionId]||{};
+  const m = d.meta||{};
+  let h = '';
+  h += `<h1>${esc(m.title)}</h1>`;
+  if(m.subtitle) h += `<p class="sub">${esc(m.subtitle)}</p>`;
+  if(m.provenance) h += `<p class="prov">${esc(m.provenance)}${m.date? ' · '+esc(m.date):''}</p>`;
+  if(m.verdictTag) h += `<span class="pill">${esc(m.verdictTag)}</span>`;
+
+  // recommendation
+  h += `<h2>Recommendation</h2><div class="rec">`;
+  h += `<p class="win">${esc(win.name||rec.optionId||'—')}</p>`;
+  if(rec.confidence) h += `<p class="conf">Confidence: ${esc(rec.confidence)}</p>`;
+  if(rec.rationale) h += `<p>${esc(rec.rationale)}</p>`;
+  h += `</div>`;
+  if(rec.grafts && rec.grafts.length){ h += `<p class="note"><b>Graft from runners-up:</b></p><ul>`;
+    rec.grafts.forEach(g=> h += `<li>${esc(g)}</li>`); h += `</ul>`; }
+
+  // tie note
+  if(d.tie && d.tie.isTie){ h += `<div class="tie"><b>Too close to call</b> — top two within ${d.tie.margin} on the weighted total. Deciding factor: <b>${esc(d.tie.decidingFactor||'—')}</b>.</div>`; }
+
+  // matrix
+  h += `<h2>Scored options — weighted 0–5 (3 judges; ✦ = judge spread ≥ 3, low confidence)</h2>`;
+  h += `<table><thead><tr><th class="opt" style="text-align:left">Option</th>`;
+  crit.forEach(c=> h += `<th>${esc(c.label.split('(')[0].trim())}<span class="w">w ${c.weight}${c.higherIsBetter===false?' ▾':''}</span></th>`);
+  h += `<th>Weighted<span class="w">total</span></th><th>Skeptic</th></tr></thead><tbody>`;
+  d.ranking.forEach(oid=>{ const o=byId[oid]; const isWin = oid===rec.optionId;
+    h += `<tr class="${isWin?'win-row':''}"><td class="opt">${isWin?'★ ':''}${esc(o.name)}<span class="lens">${esc(o.lens||'')}</span></td>`;
+    crit.forEach(c=>{ const s=(o.scores||{})[c.key]; const v=s?s.mean:null;
+      const flag = s && s.spread>=3 ? '<span class="sp"> ✦</span>':'';
+      h += `<td><span class="cell" style="background:${heat(v,c.higherIsBetter)}">${v==null?'—':v.toFixed(2)}</span>${flag}</td>`; });
+    const av=(o.adversarial||{}).verdict||'';
+    h += `<td class="total">${o.weightedTotal.toFixed(2)}</td><td class="adv-${esc(av)}">${esc(av||'—')}</td></tr>`; });
+  h += `</tbody></table>`;
+  if(!d.weightsOk) h += `<p class="note sp">⚠ Criteria weights sum to ${d.weightsTotal}, not 1.0.</p>`;
+
+  // kill criteria
+  if(d.killCriteria && d.killCriteria.length){ h += `<h2>Kill criteria — what would change this answer</h2><ul>`;
+    d.killCriteria.forEach(k=> h += `<li>${esc(k)}</li>`); h += `</ul>`; }
+
+  h += `<p class="foot">Scores are directional, not precise — the value is the structured comparison and the surfaced risks. Weighted totals computed at render time from raw judge means (weighting.py); lower-is-better criteria (▾) inverted in the total.</p>`;
+  root.innerHTML = h;
+})();
+</script>
+</body>
+</html>

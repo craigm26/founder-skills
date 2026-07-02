@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "founder-skills",
-  "description": "A judgment layer for Claude Code — 12 skills: session calibration, token budget routing, a validate→spec→plan chain, Fable 5 orchestration, and craft. Works for any builder, developer, or researcher using Claude Code with Fable 5.",
+  "description": "A judgment layer for Claude Code \u2014 15 skills: session calibration, token budget routing, a validate\u2192spec\u2192plan chain, Fable 5 orchestration, craft, and marketplace-maintainer tooling. Works for any builder, developer, or researcher using Claude Code with Fable 5.",
   "owner": {
     "name": "Craig Merry",
     "email": "craigm26@gmail.com"
@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "session-start",
-      "description": "Judgment layer entry point — three AskUserQuestion prompts establish effort tier, domain, and skill routing before any work begins. Start every session here.",
+      "description": "Judgment layer entry point \u2014 three AskUserQuestion prompts establish effort tier, domain, and skill routing before any work begins. Start every session here.",
       "author": {
         "name": "craigm26"
       },
@@ -19,7 +19,7 @@
     },
     {
       "name": "effort",
-      "description": "Single-question token budget calibrator — sets the model routing tier (Opus 4.8 / Sonnet 4.6, with an external-executor fallback) for the session. Downstream skills inherit this choice.",
+      "description": "Single-question token budget calibrator \u2014 sets the model routing tier (Opus 4.8 / Sonnet 4.6, with an external-executor fallback) for the session. Downstream skills inherit this choice.",
       "author": {
         "name": "craigm26"
       },
@@ -29,7 +29,7 @@
     },
     {
       "name": "market-validation",
-      "description": "Validate whether there is a real market for a product idea: multi-angle web research with live-URL verification → cited evidence pack → Tufte HTML deck + PDF/PPTX → a build/integrate brief and an emitted market-map graph.",
+      "description": "Validate whether there is a real market for a product idea: multi-angle web research with live-URL verification \u2192 cited evidence pack \u2192 Tufte HTML deck + PDF/PPTX \u2192 a build/integrate brief and an emitted market-map graph.",
       "author": {
         "name": "craigm26"
       },
@@ -39,7 +39,7 @@
     },
     {
       "name": "build-options",
-      "description": "Decide what to build after a market is validated: divergent options → independent judge-panel weighted decision matrix → adversarial stress-test → a recommended build with kill criteria. Chains into prd → tasks.",
+      "description": "Decide what to build after a market is validated: divergent options \u2192 independent judge-panel weighted decision matrix \u2192 adversarial stress-test \u2192 a recommended build with kill criteria. Chains into prd \u2192 tasks.",
       "author": {
         "name": "craigm26"
       },
@@ -69,7 +69,7 @@
     },
     {
       "name": "fable-orchestrated-feature-dev",
-      "description": "Fable-plan → implement → review pipeline for new features: Fable writes a detailed plan file, a capable model (Opus 4.8 / Sonnet 4.6) implements it exactly, Fable reviews the output against the spec — with an external-executor fallback when tokens are exhausted. Fable never writes implementation code.",
+      "description": "Fable-plan \u2192 implement \u2192 review pipeline for new features: Fable writes a detailed plan file, a capable model (Opus 4.8 / Sonnet 4.6) implements it exactly, Fable reviews the output against the spec \u2014 with an external-executor fallback when tokens are exhausted. Fable never writes implementation code.",
       "author": {
         "name": "craigm26"
       },
@@ -79,7 +79,7 @@
     },
     {
       "name": "fable-repo-audit",
-      "description": "Deep, honest 4-phase repository audit: discovery and mapping → evidence-based findings with severity ratings → improvement strategy → milestone task plan with effort estimates. Grounded in file paths and line numbers; analysis only, no code changes.",
+      "description": "Deep, honest 4-phase repository audit: discovery and mapping \u2192 evidence-based findings with severity ratings \u2192 improvement strategy \u2192 milestone task plan with effort estimates. Grounded in file paths and line numbers; analysis only, no code changes.",
       "author": {
         "name": "craigm26"
       },
@@ -89,7 +89,7 @@
     },
     {
       "name": "fable-org-audit",
-      "description": "Live integration audit of a customer organization on your platform: probes real API signals across eight dimensions, grades each 🟢 🟡 🔴 ⚫, and produces a prioritized gap list. Portable pattern with a worked PlatAtlas endpoint mapping; memory accumulates verified org patterns across runs.",
+      "description": "Live integration audit of a customer organization on your platform: probes real API signals across eight dimensions, grades each \ud83d\udfe2 \ud83d\udfe1 \ud83d\udd34 \u26ab, and produces a prioritized gap list. Portable pattern with a worked PlatAtlas endpoint mapping; memory accumulates verified org patterns across runs.",
       "author": {
         "name": "craigm26"
       },
@@ -99,7 +99,7 @@
     },
     {
       "name": "fable-loop-design",
-      "description": "Design self-correction loops and multi-session memory systems for Fable 5: rubric-driven loops graded by an independent verifier sub-agent (not self-critique), and the fail → investigate → verify → distill → consult memory progression.",
+      "description": "Design self-correction loops and multi-session memory systems for Fable 5: rubric-driven loops graded by an independent verifier sub-agent (not self-critique), and the fail \u2192 investigate \u2192 verify \u2192 distill \u2192 consult memory progression.",
       "author": {
         "name": "craigm26"
       },
@@ -109,7 +109,7 @@
     },
     {
       "name": "tufte-viz",
-      "description": "Ideate and critique data visualizations using Edward Tufte's principles — data-ink ratio, chartjunk elimination, graphical integrity, small multiples. Ships four working HTML demos (GISS temperature, Kyoto sakura, sunspot butterfly/pretty) and reference docs on analytical design.",
+      "description": "Ideate and critique data visualizations using Edward Tufte's principles \u2014 data-ink ratio, chartjunk elimination, graphical integrity, small multiples. Ships four working HTML demos (GISS temperature, Kyoto sakura, sunspot butterfly/pretty) and reference docs on analytical design.",
       "author": {
         "name": "craigm26"
       },
@@ -119,12 +119,42 @@
     },
     {
       "name": "ecosystem-planning",
-      "description": "Produce one approvable plan that threads a hard-won lesson through a multi-repo ecosystem (libraries → core service → gateway → consumers): verified-facts discipline, parallel Explore/Plan agents, advisor review, and a re-runnable definition of done. Includes a real robotics worked example.",
+      "description": "Produce one approvable plan that threads a hard-won lesson through a multi-repo ecosystem (libraries \u2192 core service \u2192 gateway \u2192 consumers): verified-facts discipline, parallel Explore/Plan agents, advisor review, and a re-runnable definition of done. Includes a real robotics worked example.",
       "author": {
         "name": "craigm26"
       },
       "category": "productivity",
       "source": "./plugins/ecosystem-planning",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "skill-style-guide",
+      "description": "A written house style for skill-marketplace SKILL.md and README.md files: frontmatter rules, trigger-rich descriptions, body skeletons, honesty sections, a six-section README template, and a conformance checklist calibrated against your repo's own golden examples.",
+      "author": {
+        "name": "craigm26"
+      },
+      "category": "productivity",
+      "source": "./plugins/skill-style-guide",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "skill-release-gate",
+      "description": "Local pre-push release gate for a live-publishing skill marketplace: test suites, manifest JSON parse, sanitization grep, gitignore-swallow check, version-bump discipline, installed-cache desync handling, and catalog-site coordination.",
+      "author": {
+        "name": "craigm26"
+      },
+      "category": "productivity",
+      "source": "./plugins/skill-release-gate",
+      "homepage": "https://github.com/craigm26/founder-skills"
+    },
+    {
+      "name": "skill-freshness-watch",
+      "description": "Recurring drift sweep for a published skill marketplace: stale model IDs (with a multi-file bump procedure), stale beta-API claims, dead cited URLs, installed-cache desync, and sibling-repo divergence. Read-only \u2014 reports drift, hands fixes to your change process.",
+      "author": {
+        "name": "craigm26"
+      },
+      "category": "productivity",
+      "source": "./plugins/skill-freshness-watch",
       "homepage": "https://github.com/craigm26/founder-skills"
     }
   ]

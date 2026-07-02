@@ -1,0 +1,19 @@
+{
+  "name": "skill-release-gate",
+  "version": "0.1.0",
+  "description": "Local pre-push release gate for a live-publishing Claude Code skill marketplace — test suites, manifest JSON parse, sanitization grep, gitignore-swallow check, version-bump discipline, installed-cache desync handling, and catalog-site coordination.",
+  "author": {
+    "name": "Craig Merry",
+    "email": "craigm26@gmail.com"
+  },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": [
+    "release",
+    "publish",
+    "marketplace",
+    "pre-push",
+    "sanitization",
+    "versioning"
+  ]
+}

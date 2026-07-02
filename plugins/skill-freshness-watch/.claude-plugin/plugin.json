@@ -1,0 +1,19 @@
+{
+  "name": "skill-freshness-watch",
+  "version": "0.1.0",
+  "description": "Recurring drift sweep for maintainers of a published Claude Code skill marketplace — catches stale model IDs (with a multi-file bump procedure), stale beta-API claims, dead cited URLs, installed-cache desync, and sibling-repo divergence. Read-only: reports drift, hands fixes to your change process.",
+  "author": {
+    "name": "Craig Merry",
+    "email": "craigm26@gmail.com"
+  },
+  "homepage": "https://github.com/craigm26/founder-skills",
+  "license": "MIT",
+  "keywords": [
+    "maintenance",
+    "freshness",
+    "drift",
+    "marketplace",
+    "skills",
+    "re-verification"
+  ]
+}
