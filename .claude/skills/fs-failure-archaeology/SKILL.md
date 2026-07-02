@@ -47,14 +47,15 @@ accepted-risk. All relative paths below are from the repo root.
 
 | # | Name | One-line symptom | Status (2026-07-02) |
 |---|---|---|---|
-| 1 | gitignore swallow | build-options crashes: `FileNotFoundError: matrix.template.html` | fixed-uncommitted |
+| 1 | gitignore swallow | build-options crashes: `FileNotFoundError: matrix.template.html` | **fixed — committed 648d304, pushed 2026-07-02** |
 | 2 | PEP-668 README | `python3 -m pytest` → "No module named pytest" | open |
 | 3 | node directory form | `node --test tests/js/` → MODULE_NOT_FOUND; JS suite absent from README | open |
-| 4 | syntax-checked-only workflows | Two Workflow scripts never actually executed end-to-end | open (honestly labeled) |
-| 5 | prd/tasks import mismatch | Two skills in a foreign house style with an unstated CLI dependency | open (rewrite licensed) |
-| 6 | site oversell drift | Pages site claims exceed what the skills do | open |
+| 4 | syntax-checked-only workflows | Two Workflow scripts never actually executed end-to-end | **proving runs executed 2026-07-02** (see campaign Phase 1; entry 9 fallout) |
+| 5 | prd/tasks import mismatch | Two skills in a foreign house style with an unstated CLI dependency | **fixed-uncommitted 2026-07-02** (rewritten to house style; agent-browser → "browser executor", 1 mention) |
+| 6 | site oversell drift | Pages site claims exceed what the skills do | **fixed-uncommitted 2026-07-02** (chips honest, card copy corrected; site-checks.sh green) |
 | 7 | add-skill.sh hazards | Validator can't catch missing assets; script `rm -rf`s a user dir | accepted-risk |
 | 8 | emit_atlas rename | 2026-06-11 rename could have broken external users; no telemetry | accepted-risk |
+| 9 | skeptic verdict drop | build-options workflow: stress-test verdicts silently defaulted to `survive` | fixed-uncommitted 2026-07-02 (found by the Phase-1 proving run) |
 
 ---
 
@@ -121,9 +122,12 @@ accepted-risk. All relative paths below are from the repo root.
   which is a simulation, not the real Workflow runtime.
 - **Evidence:** the skills say so themselves — `plugins/market-validation/SKILL.md:93` and
   `plugins/build-options/SKILL.md:63`: "syntax-checked only — its first real invocation is its proving run."
-- **Status:** **open**, honestly labeled. The proving run is a step of the gated campaign in
-  `fs-flagship-chain-campaign` — do not silently "prove" these outside that campaign, and do not
-  remove the honesty labels until a real run has passed (doctrine: `fs-doctrine-and-honesty`).
+- **Status:** **proving runs executed 2026-07-02** via the campaign (Phase 1, minimum-honest
+  scale, real product topic): research-workflow.js passed every expected observation (4/4 angles,
+  24 curated, 24 survived, exact return shape, args threaded); build-options-workflow.js ran
+  end-to-end and its proving run **caught entry 9** (silent skeptic-verdict drop) — which is what
+  proving runs are for. Honesty labels graduate to "proven on 2026-07-02" via the promotion spec,
+  never deleted (fence F5).
 
 ## Entry 5 — prd + tasks: off-style external imports
 
@@ -135,10 +139,12 @@ accepted-risk. All relative paths below are from the repo root.
 - **Hidden dependency:** `plugins/tasks/SKILL.md:67` **mandates** the third-party
   `agent-browser` CLI (github.com/vercel-labs/agent-browser) for all browser acceptance criteria —
   an unstated install dependency nowhere in the install docs.
-- **Status:** **open — rewrite licensed** by operator decision 2026-07-02: prd/tasks MAY be rewritten
-  into house style, and agent-browser should be genericized the same way Codex became
-  "external executor". Until then: **never copy style from prd or tasks** (nor tufte-viz's
-  nonconforming `|` frontmatter). Style source of truth: `fs-skill-style-guide`.
+- **Status:** **fixed-uncommitted 2026-07-02**: both rewritten in place to house style (prd
+  200→128 lines v0.2.0, tasks 480→150 lines v0.3.0), worked examples moved to `references/`,
+  agent-browser genericized to "browser executor" (1 "such as" mention), handoff contract
+  (`/tasks/prd-*.md` → `prd.json`, field names unchanged) verified by an independent acceptance
+  agent — all 9 campaign Phase-2 criteria pass. tufte-viz's nonconforming `|` frontmatter remains
+  the only never-copy holdout. Style source of truth: `fs-skill-style-guide`.
 
 ## Entry 6 — Pages site oversell drift
 
@@ -149,9 +155,12 @@ accepted-risk. All relative paths below are from the repo root.
   - line 243: fable-org-audit "runs itself weekly via /schedule..." — the skill only *documents*
     scheduling options; nothing runs itself.
 - **Root cause:** marketing copy drifted past the no-oversell rule during the 2026-06-11 site work.
-- **Status:** **open**. The correction is a documented follow-on, and site edits require a
-  coordinated spec (two sibling sites must stay in step) — route through `fs-change-control`, then
-  `fs-site-and-positioning` for mechanics. Do not hot-patch the HTML.
+- **Status:** **fixed-uncommitted 2026-07-02** (operator un-gated Phase 3 in-session): chips now
+  read "a few hundred tokens", the org-audit card describes weekly cadence as something you set
+  up, count copy is "fifteen", and 3 maintainer-tooling cards were added —
+  `grep -c "~0 tokens\|runs itself weekly" docs/index.html` → 0 and `site-checks.sh` is fully
+  green. Sibling-site (claude-skills-site) coordination remains open: its copy still says
+  "12 installable today".
 - **Lesson:** the repo's own doctrine (`fs-doctrine-and-honesty`) applies hardest to the most
   public surface; that's exactly where it slipped.
 
@@ -188,6 +197,29 @@ accepted-risk. All relative paths below are from the repo root.
   gaps like this.)
 - **Lesson:** renames of shipped executable assets are breaking changes on a live-publishing master;
   spec them, state the risk, and prefer a deprecation shim when cheap.
+
+## Entry 9 — skeptic verdict drop: stress-test silently defaulted to "survive"
+
+- **Symptom:** the first real run of `build-options-workflow.js` (proving run, 2026-07-02)
+  returned ALL THREE stress-tested options as `adversarial: {verdict: "survive", killerRisks: []}`
+  — while the workflow journal showed the three skeptic agents had actually returned `wounded`,
+  `wounded`, and `killed`.
+- **Root cause:** the refute prompt never told the skeptic the option's exact `id`; the schema made
+  it invent an `optionId`; and the join (`advById[a.optionId] || {verdict:'survive', killerRisks:[]}`)
+  silently replaced every mismatched echo with the default. A paraphrased id (e.g.
+  `cloudflare-native-wedge` for `cf-native-soc2-evidence-wedge`) joined to nothing.
+- **Evidence:** run `wf_58e1fc39-7fb` journal: skeptic results carried optionIds
+  `cloudflare-native-wedge` / `attestable-forensic-evidence-tier` /
+  `attestable-evidence-rails-white-label-signing-api` vs actual option ids
+  `cf-native-soc2-evidence-wedge` / `forensic-evidence-tier` / `attestable-evidence-rails-api`.
+  The campaign skill had pre-documented this exact gotcha ("an empty killerRisks on a top-3 option
+  is suspicious") — the proving run confirmed it as a live defect, not just a caution.
+- **Fix:** bind the verdict to the option **by construction** — the thunk's closure stamps
+  `optionId: o.id` over the model's echo (`.then(v => v ? {...v, optionId: o.id} : v)`), plus the
+  prompt now states the exact id. Trusting a model-echoed join key is the anti-pattern; the durable
+  rule lives in `fs-anthropic-primitives` territory: join sub-agent outputs on keys YOU control.
+- **Status:** **fixed-uncommitted 2026-07-02**; stress-test leg re-run via Workflow resume
+  (generators + judges replayed from cache) to produce honest verdicts.
 
 ---
 

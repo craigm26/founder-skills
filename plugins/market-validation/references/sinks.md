@@ -42,14 +42,22 @@ equivalent edges into a Mermaid `graph LR` block for GitHub-rendered markdown.
 ## Sink 3 — a graph/workflow platform (worked example: PlatAtlas)
 
 [PlatAtlas](https://platatlas.com) (workflow-cognition mapping) consumes exactly this
-families/nodes/flows shape from a repo's `docs/workflows/` directory. To use it as a sink:
-drop `nodes.json` + `flows.json` there, register the atlas in the console, and refresh.
+families/nodes/flows shape. Local server + static viewer read it from a repo's
+`docs/workflows/` directory; the HOSTED console path is split — `nodes.json` registers as
+its own atlas (R2 META descriptor entry + `meta/<slug>/<basename>/nodes.json`), flows seed
+into the platform's database via its operator-gated seeder.
 
-**Honesty caveat (applies to any third-party sink):** the emitted files are *shape-valid*
-against that parser's documented format, but unless you have personally run the end-to-end
-load-and-render path, describe the integration as **"shape-valid, load-untested"** — never
-"works today". If your platform lacks a write API (PlatAtlas's atlas write path is
-file-drop only), a one-click import endpoint is its own project, not this skill's output.
+**Status: proven on the hosted path, 2026-07-02.** A real emitted map (21 nodes / 6
+families / 1 flow) was registered as its own atlas for a live org and its flow seeded;
+the hosted graph API served all map nodes and 15 new step-edges, and the flow was
+searchable. One platform behavior to know: the hosted graph endpoint serves the ORG-merged
+node pool for any atlas id — per-atlas ids scope access, not content.
+
+**Honesty caveat (applies to any OTHER third-party sink):** the emitted files are
+*shape-valid* against a parser's documented format, but unless you have personally run
+that sink's end-to-end load-and-render path, describe the integration as **"shape-valid,
+load-untested"** — never "works today". If your platform lacks a write API, a one-click
+import endpoint is its own project, not this skill's output.
 
 ## Writing your own sink
 

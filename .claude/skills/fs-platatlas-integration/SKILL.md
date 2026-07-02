@@ -227,7 +227,18 @@ Status ledger (update in place):
 |---|---|---|
 | 2026-06-11 | emit + referential-integrity assert | shape-valid (emitter self-check) |
 | 2026-07-02 | emitter output vs workflow-atlas schema constraints | PASS on synthetic sample (`check_map_shape.py`) |
-| — | any load path (A/B/C) | **never attempted** |
+| 2026-07-02 | **Path C (hosted console) — PROVEN** on org `platatlas` with the real 2026-06-24 accountability-rail map (21 nodes / 6 families / 1 flow) | Nodes: registered as own atlas `92892cbc-c4f1-5b06-a849-791d80677dcc` (R2 META hand-PUT + non-destructive `[[atlases]]` append; backup kept). Flow `competitive-landscape` seeded via `bin/seed-org-flows.mjs --write` (dry-run inspected first). Hosted graph API: edges 25→40, 15 new `kind:step`; survey resolves `flow:competitive-landscape`. Screenshot NOT captured (no browser in the proving env) — graph DTO is the render evidence. Run log: PlatChat org platatlas `#general` thread `msg_01KWJH0JGC6YKJC121X392XA08`. |
+
+**Findings from the proving run (2026-07-02):**
+- The hosted graph endpoint serves the ORG-MERGED node pool for ANY atlas_id of the org
+  (per-atlas ids scope ACCESS, not content) — both atlas ids returned the identical
+  34-node / 11-family graph. Plan flows/nodes accordingly; a map atlas is not isolated in render.
+- Auth for hosted verification: `~/.platatlas/auth.json` + the MCP cache both go stale; a
+  session mints fine via `POST /auth/github/device-exchange` with the **gh CLI token**
+  (`gh auth token`) — no interactive device flow needed while `gh` is logged in.
+- Rollback (unused): `wrangler d1 execute platatlas --remote --command "DELETE FROM flows
+  WHERE org_slug='platatlas' AND id='competitive-landscape'"`; descriptor backup at the
+  proving session's scratchpad (`platatlas.toml.backup`).
 
 ## Provenance and maintenance
 

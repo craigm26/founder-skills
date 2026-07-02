@@ -137,7 +137,7 @@ runtime (~53 lines). Read it — it is the reference implementation. What it doe
 
 **Honesty boundary:** the harness proves the script's *logic under stubs*. It does NOT
 prove the script runs under the real Workflow tool — both workflow scripts are still
-self-declared **"syntax-checked only; first real invocation is the proving run"**
+labeled **"proven on 2026-07-02"** (before that: "syntax-checked only"; the harness remains a simulation — the live-runtime proof lives in the campaign spec)
 (defect ledger #4; the proving run is **fs-flagship-chain-campaign** scope).
 
 ## How to add a test to each suite

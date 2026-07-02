@@ -9,7 +9,10 @@ implementation model or external executor without a human in the loop.
 
 The skill's core discipline is the **golden rule**: no vague criteria ("works correctly", "looks
 good") survive into the plan. Tasks are exploded into granular sub-tasks and ordered by dependency
-(schema → backend → UI → tests). It runs autonomously — no questions asked.
+(investigation → schema → backend → UI → verification). It runs autonomously — no questions asked.
+No third-party tools required: browser-based criteria are written as generic capability patterns
+(open / click / fill / screenshot / console-check) that any browser executor the executing agent
+has can satisfy.
 
 ## What it will ask you
 
@@ -18,8 +21,12 @@ generates the JSON immediately.
 
 ## What it produces
 
-`prd.json` — tasks with dependencies and machine-verifiable acceptance criteria, ready to hand to
-whichever implementation tier your `/effort` setting chose.
+- `prd.json` — dependency-ordered tasks, each with machine-verifiable acceptance criteria and an
+  initial `passes: false`, ready to hand to whichever implementation tier your `/effort` setting
+  chose.
+- A summary: task count, priority order, branch name, saved path.
+- A worked example ships with the plugin (`references/example-signup-fix.md`) showing a one-line
+  PRD task exploded into a 10-task plan.
 
 ## Outcome rubric export
 

@@ -90,11 +90,12 @@ markdown evidence pack (the workflow's `report`) as the durable write-up.
 `market-map/nodes.json` + `market-map/flows.json`, and the build/integrate brief. Surface them to the user (SendUserFile).
 
 ## Known limitations (keep your honesty consistent)
-- **The generalized workflow is syntax-checked only — its first real invocation is its proving run.**
-  `assets/research-workflow.js` was rewritten to read `args.config`/`args.angles` and to return
-  `{ report, survivors[], competitors[], droppedCount }`, but it has only ever executed in its earlier
-  *hardcoded* form. On the first run, confirm `args.angles` actually flows into the investigator prompts and
-  that the returned `survivors`/`competitors` match what Phase 2 consumes — before trusting the ~1.5M-token output.
+- **The generalized workflow was proven on 2026-07-02** (see
+  `docs/superpowers/specs/2026-07-02-flagship-campaign-execution.md`): a real minimum-honest run
+  (4 default angles, real product topic, 30 agents) threaded `args.config` into the investigator
+  prompts and returned the documented `{ report, survivors[], competitors[], droppedCount }` shape
+  (24 curated / 24 survived / 0 dropped). `args.angles` beyond the defaults is still unexercised;
+  on a custom-angles run, confirm they flow into the prompts before trusting the output.
 - **The emitted market map is shape-valid; no sink's load path is verified by this skill**
   (`references/market-map-schema.md` + `references/sinks.md`). Do not tell the user a specific
   platform integration "works today."

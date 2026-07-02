@@ -114,18 +114,16 @@ There is no documented "trivial" tier. If you think a change is too small for a 
 default in a live-publishing repo is: draft a short spec anyway and let the operator approve or
 waive it. (UNVERIFIED: no written waiver rule exists; absence of a tier is not permission.)
 
-### Known pipeline debt (2026-07-02) — this handoff itself
+### Pipeline debt — DISCHARGED 2026-07-02
 
-The 2026-07-02 uncommitted working tree (template rescue, this `.claude/skills/fs-*` handoff
-library, and the 3 `plugins/skill-*` public plugins + their marketplace.json registration) was
-operator-directed in-session, but **no spec or plan artifact exists for it yet** —
-`docs/superpowers/specs/` and `plans/` still hold only the four 2026-06-11 documents. Per the
-classification table above, the plugin + marketplace.json changes are a multi-task workstream.
-Before the operator commits: draft `docs/superpowers/specs/2026-07-02-handoff-library-design.md`
-(Status pending operator approval) plus a matching checkbox plan with literal commit messages
-(template rescue / fs- library / 3 public plugins) — or have the operator explicitly waive the
-pipeline for this change and record that waiver here. The session facts pack is scratchpad, not
-a repo artifact; it does not substitute for the spec.
+The 2026-07-02 handoff batch (template rescue + fs- library + 3 public plugins, then the campaign
+Phases 1–3 and the PlatAtlas sink proving) initially shipped operator-directed without a spec.
+The debt was discharged the same day with a partly-retroactive doc-of-record pair:
+`docs/superpowers/specs/2026-07-02-flagship-campaign-execution.md` (Status: approved by operator,
+in-session instructions quoted) + `docs/superpowers/plans/2026-07-02-flagship-campaign-execution.md`
+(checked as executed, with evidence and re-runnable verification). Precedent: a retroactive spec
+is acceptable ONLY for operator-instructed-in-session work, must say so explicitly, and must land
+in the same push as the work it records — it is a record, not a bypass.
 
 ## The five standing rules
 

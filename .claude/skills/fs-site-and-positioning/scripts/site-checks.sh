@@ -26,12 +26,12 @@ else
   note "ok: oversell strings gone (defect #6 resolved — update the skill + ledger)"
 fi
 
-# 3. Card count must equal the number the copy claims (currently: twelve).
+# 3. Card count must equal the number the copy claims (currently: fifteen, since 2026-07-02).
 cards=$(grep -c '<div class="card">' "$SITE")
-if [ "$cards" -ne 12 ]; then
-  note "FAIL: card count is $cards, copy claims twelve — fix copy or cards"; fail=1
+if [ "$cards" -ne 15 ]; then
+  note "FAIL: card count is $cards, copy claims fifteen — fix copy or cards"; fail=1
 else
-  note "ok: 12 cards == 'twelve skills' claim"
+  note "ok: 15 cards == 'fifteen skills' claim"
 fi
 
 # 4. HTML well-formedness (stack check via stdlib html.parser; no pip deps).

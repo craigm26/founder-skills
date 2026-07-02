@@ -1,6 +1,6 @@
 {
   "name": "prd",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Generate a Product Requirements Document (PRD) for a new feature: self-clarify the open questions, then produce a clear, actionable, implementation-ready PRD. Use when planning a feature or starting a new project. Chains after build-options and into the tasks skill.",
   "author": { "name": "Craig Merry", "email": "craigm26@gmail.com" },
   "homepage": "https://github.com/craigm26/founder-skills",

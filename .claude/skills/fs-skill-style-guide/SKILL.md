@@ -39,8 +39,7 @@ This skill covers only **what the prose and structure of a SKILL.md / README.md 
 | Tier | Skills | Rule |
 |---|---|---|
 | **Golden four** (copy from these) | `market-validation`, `build-options`, `ecosystem-planning`, `fable-org-audit` | Open one of these side-by-side while writing. They define the style. |
-| Conforming | `effort`, `session-start`, `fable-repo-audit`, `fable-loop-design`, `fable-orchestrated-feature-dev` | Fine as secondary examples for their conventions (Announce, dot digraphs, Common Mistakes). |
-| **NEVER copy** | `prd`, `tasks` | Off-style external imports (verified 2026-07-02): different voice, ✅/❌ emoji in tasks, no `references/`, no model routing, `tasks` is 480 lines (2–6× house norm), hard undeclared dependency on a third-party `agent-browser` CLI. A house-style rewrite is operator-licensed but not done. |
+| Conforming | `effort`, `session-start`, `fable-repo-audit`, `fable-loop-design`, `fable-orchestrated-feature-dev`, `prd`, `tasks` | Fine as secondary examples for their conventions (Announce, dot digraphs, Common Mistakes). `prd`/`tasks` joined this tier 2026-07-02 — rewritten in place to house style (campaign Phase 2, all 9 acceptance criteria verified); before that they were never-copy off-style imports (ledger entry 5). |
 | **NEVER copy** | `tufte-viz` | Nonconforming frontmatter: uses YAML literal block `\|` instead of folded `>-`, numbered-list description instead of "Use when …" utterances. |
 
 ## Rule 1 — Frontmatter

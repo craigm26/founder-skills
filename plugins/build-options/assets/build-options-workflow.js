@@ -119,9 +119,12 @@ const ADV_SCHEMA = {
 };
 const adversarial = (await parallel(top.map(o => () =>
   agent(
-    `You are a skeptical investor trying to REFUTE this build option. It is the present day.\nCONTEXT: ${CONTEXT_STR}\nOPTION: ${o.name} (${o.lens}) — ${o.thesis}\nMVP: ${o.mvpScope}\nHow it claims to beat the incumbent: ${o.incumbentBeat}\n\nAttack it: the incumbent's most likely counter-move, hidden costs, regulatory/liability landmines, distribution reality, and why it could fail. Then verdict: "killed" (a fatal flaw), "wounded" (serious but survivable risks), or "survive" (holds up). List the concrete killer risks.`,
+    `You are a skeptical investor trying to REFUTE this build option. It is the present day.\nCONTEXT: ${CONTEXT_STR}\nOPTION: ${o.name} (${o.lens}) — ${o.thesis}\nMVP: ${o.mvpScope}\nHow it claims to beat the incumbent: ${o.incumbentBeat}\n\nAttack it: the incumbent's most likely counter-move, hidden costs, regulatory/liability landmines, distribution reality, and why it could fail. Then verdict: "killed" (a fatal flaw), "wounded" (serious but survivable risks), or "survive" (holds up). List the concrete killer risks. Return optionId exactly "${o.id}".`,
     { label: `refute:${o.id}`, phase: 'Stress-test', schema: ADV_SCHEMA }
-  )
+  // Bind the verdict to the option by construction (closure), never by the model's
+  // echoed optionId — a paraphrased echo previously joined to nothing and silently
+  // defaulted every option to {survive, []} (proving run 2026-07-02).
+  ).then(v => (v ? { ...v, optionId: o.id } : v))
 ))).filter(Boolean);
 const advById = {}; adversarial.forEach(a => { advById[a.optionId] = { verdict: a.verdict, killerRisks: a.killerRisks }; });
 options.forEach(o => { o.adversarial = advById[o.id] || { verdict: 'survive', killerRisks: [] }; delete o._rawMean; });

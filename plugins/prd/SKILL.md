@@ -1,72 +1,79 @@
 ---
 name: prd
-description: "Generate a Product Requirements Document (PRD) for a new feature. Use when planning a feature, starting a new project, or when asked to create a PRD. Triggers on: create a prd, write prd for, plan this feature, requirements for, spec out."
+description: >-
+  Generate an implementation-ready Product Requirements Document for a feature: self-clarify the
+  open questions (no user interview), then write a structured PRD — goals, one-session tasks with
+  verifiable acceptance criteria, numbered functional requirements, non-goals — saved to
+  /tasks/prd-<feature-name>.md, ready for the `tasks` skill to convert into an executable plan.
+  Use when the user asks "create a prd", "write a prd for X", "plan this feature",
+  "spec out X", "requirements for X", or after running `build-options` (its Phase 4 hands the
+  winning option here).
 ---
 
-# PRD Generator
+# PRD
 
-Create detailed Product Requirements Documents that are clear, actionable, and suitable for implementation.
+Turns a feature description into a clear, implementation-ready PRD an AI agent (or a human) can
+execute from. Third link in the founder chain `/market-validation` → `/build-options` → **`/prd`**
+→ `/tasks`. A full worked example ships in `references/example-prd-task-priority.md` — mirror it
+closely. Distinct from `/build-options` (which decides WHAT to build; this skill specs the chosen
+thing) and from `/tasks` (which converts the finished PRD file into `prd.json`).
 
----
+**Announce at start:** "Using prd to spec <feature> — self-clarifying, then writing the PRD to `/tasks/`."
 
-## The Job
+## Before you start
+- **Cost/time:** minimal — single-model document generation; no subagents, no Workflow.
+- **No questions, no code:** this skill never calls AskUserQuestion (it *self-clarifies* from
+  context) and never implements anything. It produces one document, then stops.
+- **Model routing:** authoring a PRD is planning work — it stays with the session's planning
+  model. Read the tier from `~/.claude/session-context.md` (set once via `/effort` or
+  `/session-start`); don't re-ask. Fable 5 plans and reviews and never writes implementation
+  code — this document is squarely its job. The PRD's tasks get implemented downstream at the
+  tier's implementation model (Opus 4.8 for complex work, Sonnet 4.6 for standard, an external
+  executor when tokens are exhausted).
+- **Input:** a feature description. Chained from `/build-options`, that is the winning option's
+  `thesis` + `mvpScope` + `businessModel` + key constraints (its Phase 4). Standalone, it is the
+  user's request plus codebase context (AGENTS.md/CLAUDE.md, existing patterns, any reports provided).
 
-1. Receive a feature description
-2. **Self-clarify:** Ask yourself 3-5 critical questions and answer them based on context
-3. Generate a structured PRD based on your answers
-4. Save to `/tasks/prd-[feature-name].md`
+## Phase 1 — Self-clarify
 
-**Important:** 
-- Do NOT ask the user questions. Answer them yourself using available context.
-- Do NOT start implementing. Just create the PRD.
-
----
-
-## Step 1: Self-Clarification
-
-Before generating the PRD, ask yourself these questions and write your answers. This ensures you've thought through the problem:
+Before writing anything, ask yourself these five questions and **print your answers** (they are
+where errors would live, so the user can correct them and re-run):
 
 1. **Problem/Goal:** What problem does this solve? Why now?
-2. **Core Functionality:** What are the 2-3 key actions this enables?
-3. **Scope/Boundaries:** What should this explicitly NOT do?
-4. **Success Criteria:** How do we verify it's working?
-5. **Constraints:** What technical/time constraints exist?
+2. **Core Functionality:** What are the 2–3 key actions this enables?
+3. **Scope/Boundaries:** What should this explicitly NOT do? (Be conservative — prefer smaller scope.)
+4. **Success Criteria:** How do we verify it's working? (Must be verifiable.)
+5. **Constraints:** What technical/time constraints exist? (Note any stated ones, e.g. "no DB migrations".)
 
-### Format Your Thinking:
+Emit the answers in this exact block, then proceed — do not wait for approval:
 
 ```
 ## Self-Clarification
 
-1. **Problem/Goal:** [Your answer based on the request and codebase context]
-2. **Core Functionality:** [Your answer]
-3. **Scope/Boundaries:** [Your answer - be conservative, prefer smaller scope]
-4. **Success Criteria:** [Your answer - must be verifiable]
-5. **Constraints:** [Your answer - note any mentioned constraints like "no DB migrations"]
+1. **Problem/Goal:** [answer from the request and codebase context]
+2. **Core Functionality:** [answer]
+3. **Scope/Boundaries:** [answer — conservative]
+4. **Success Criteria:** [answer — verifiable]
+5. **Constraints:** [answer]
 ```
 
-Use context from: the request, AGENTS.md, existing code patterns, and any reports/analysis provided.
+## Phase 2 — Write the PRD
 
----
+Generate the PRD with these sections, in order (see the worked example for the full shape):
 
-## Step 2: PRD Structure
+| # | Section | Contains |
+|---|---|---|
+| 1 | Introduction/Overview | Brief description of the feature and the problem it solves |
+| 2 | Goals | Specific, measurable objectives (bullet list) |
+| 3 | Tasks | `T-00n` blocks — see the format below; aim for 8–15 (the `/tasks` skill's target granularity) |
+| 4 | Functional Requirements | Numbered `FR-n:` statements ("FR-1: The system must allow users to…") |
+| 5 | Non-Goals (Out of Scope) | What this feature will NOT include — critical for managing scope |
+| 6 | Technical Considerations | *Optional:* constraints, dependencies, integration points, performance |
+| 7 | Success Metrics | How success will be measured |
+| 8 | Open Questions | Remaining unknowns needing clarification |
 
-Generate the PRD with these sections:
+Each task must be small enough to implement in one focused session, in this format:
 
-### 1. Introduction/Overview
-Brief description of the feature and the problem it solves.
-
-### 2. Goals
-Specific, measurable objectives (bullet list).
-
-### 3. Tasks
-Each task needs:
-- **Title:** Short descriptive name
-- **Description:** What needs to be done
-- **Acceptance Criteria:** Verifiable checklist of what "done" means
-
-Each task should be small enough to implement in one focused session.
-
-**Format:**
 ```markdown
 ### T-001: [Title]
 **Description:** [What to implement]
@@ -78,123 +85,44 @@ Each task should be small enough to implement in one focused session.
 - [ ] **[UI tasks only]** Verify in browser
 ```
 
-**Important:** 
-- Acceptance criteria must be verifiable, not vague. "Works correctly" is bad. "Button shows confirmation dialog before deleting" is good.
-- **For any task with UI changes:** Always include browser verification as acceptance criteria.
+Acceptance-criteria discipline — the reader may be an AI agent, so criteria must be boolean and
+machine-checkable:
 
-### 4. Functional Requirements
-Numbered list of specific functionalities:
-- "FR-1: The system must allow users to..."
-- "FR-2: When a user clicks X, the system must..."
+| Do | Don't |
+|---|---|
+| "Button shows confirmation dialog before deleting" | "Works correctly" |
+| Include "Verify in browser" on every task that touches UI | Ship a UI task with no runtime check |
+| Number requirements (`FR-1`, `T-001`) for easy reference | Bury requirements in prose |
+| Be explicit and unambiguous; explain jargon; give concrete examples | Assume the reader shares your context |
 
-Be explicit and unambiguous.
+## Phase 3 — Save and hand off to `/tasks`
 
-### 5. Non-Goals (Out of Scope)
-What this feature will NOT include. Critical for managing scope.
+- **Location + filename (the chain contract — do not change):** `/tasks/prd-<feature-name>.md`,
+  kebab-case, markdown. The `/tasks` skill reads exactly this path pattern and converts the file
+  into `prd.json` for the execution loop.
+- Before saving, check: self-clarification printed (all 5 answered) · tasks small and one-session
+  each · acceptance criteria verifiable · functional requirements numbered · non-goals present.
+- Hand off by **file path, never inline content**: tell the user (or the chaining skill) the saved
+  path and that `/tasks` is the next step. Surface the file to the user (SendUserFile).
 
-### 6. Technical Considerations (Optional)
-- Known constraints or dependencies
-- Integration points with existing systems
-- Performance requirements
+## Deliverables
 
-### 7. Success Metrics
-How will success be measured?
+One file: `/tasks/prd-<feature-name>.md` — self-clarification block + the 8-section PRD.
 
-### 8. Open Questions
-Remaining questions or areas needing clarification.
+## Known limitations (keep your honesty consistent)
 
----
+- **The `/build-options` → `/prd` handoff is described, not yet exercised** (mirrors the admission
+  in build-options' own Known limitations). On the first chained run, confirm the PRD actually
+  lands in `/tasks/` before telling the user the chain worked.
+- **Self-clarification answers come from context, not the user.** On a thin repo or vague request
+  they can be confidently wrong — that is why the block is printed before the PRD. Correct-and-re-run
+  is the intended fix loop; the skill does not detect its own bad answers.
+- **Task sizing is judgment, not measurement.** "One focused session" is not verified by anything;
+  the 8–15 target comes from `/tasks`' granularity guidance, not from measured runs.
 
-## Writing for Agents
+## References
 
-The PRD reader may be an AI agent. Therefore:
-
-- Be explicit and unambiguous
-- Avoid jargon or explain it
-- Provide enough detail to understand purpose and core logic
-- Number requirements for easy reference
-- Use concrete examples where helpful
-
----
-
-## Output
-
-- **Format:** Markdown (`.md`)
-- **Location:** `/tasks/`
-- **Filename:** `prd-[feature-name].md` (kebab-case)
-
----
-
-## Example PRD
-
-```markdown
-# PRD: Task Priority System
-
-## Introduction
-
-Add priority levels to tasks so users can focus on what matters most.
-
-## Goals
-
-- Allow assigning priority (high/medium/low) to any task
-- Provide clear visual differentiation between priority levels
-- Enable filtering by priority
-
-## Tasks
-
-### T-001: Add priority field to database
-**Description:** Add priority column to tasks table for persistence.
-
-**Acceptance Criteria:**
-- [ ] Add priority column: 'high' | 'medium' | 'low' (default 'medium')
-- [ ] Generate and run migration successfully
-- [ ] Quality checks pass
-
-### T-002: Display priority indicator on task cards
-**Description:** Show colored priority badge on each task card.
-
-**Acceptance Criteria:**
-- [ ] Each task card shows colored badge (red=high, yellow=medium, gray=low)
-- [ ] Priority visible without hovering
-- [ ] Quality checks pass
-- [ ] Verify in browser
-
-### T-003: Add priority selector to task edit
-**Description:** Allow changing task priority in edit modal.
-
-**Acceptance Criteria:**
-- [ ] Priority dropdown in task edit modal
-- [ ] Shows current priority as selected
-- [ ] Saves on selection change
-- [ ] Quality checks pass
-- [ ] Verify in browser
-
-## Functional Requirements
-
-- FR-1: Add `priority` field to tasks table
-- FR-2: Display colored priority badge on each task card
-- FR-3: Include priority selector in task edit modal
-
-## Non-Goals
-
-- No priority-based notifications
-- No automatic priority assignment
-
-## Success Metrics
-
-- Users can change priority in <2 clicks
-- High-priority tasks immediately visible
-```
-
----
-
-## Checklist
-
-Before saving the PRD:
-
-- [ ] Completed self-clarification (answered all 5 questions)
-- [ ] Tasks are small and specific (completable in one session each)
-- [ ] Acceptance criteria are verifiable (not vague)
-- [ ] Functional requirements are numbered and unambiguous
-- [ ] Non-goals section defines clear boundaries
-- [ ] Saved to `/tasks/prd-[feature-name].md`
+- `references/example-prd-task-priority.md` — full worked example PRD (fictional Task Priority
+  System); mirror its task format and acceptance criteria.
+- `/build-options` SKILL.md Phase 4 — the upstream handoff that feeds this skill.
+- `/tasks` SKILL.md — the downstream consumer of `/tasks/prd-<feature-name>.md`.

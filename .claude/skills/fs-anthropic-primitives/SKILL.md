@@ -73,7 +73,7 @@ function and injects the globals `agent`, `parallel`, `phase`, `log`, `args`. Co
 - Therefore `node --test 'tests/js/*.test.mjs'` (glob form only — directory form fails,
   defect ledger #3) is the ONLY way to exercise the shipped script offline.
 
-**Honesty status (do not weaken this):** both scripts are self-declared **"syntax-checked only —
+**Honesty status (do not weaken this):** both scripts were **proven on 2026-07-02** (campaign Phase 1 spec); before that they were self-declared **"syntax-checked only —
 its first real invocation is its proving run"** (market-validation SKILL.md:93, build-options
 SKILL.md:63; defect ledger #4). They were rewritten 2026-06-11 to read `args.*` but have only ever
 executed in an earlier hardcoded form. The gated proving run belongs to `fs-flagship-chain-campaign`.

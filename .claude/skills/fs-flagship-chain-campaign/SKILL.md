@@ -1,9 +1,10 @@
 ---
 name: fs-flagship-chain-campaign
 description: >-
-  The decision-gated executable campaign to prove and harden the flagship founder chain
-  (market-validation → build-options → prd → tasks), which is broken/unproven at its execution end:
-  two Workflow scripts have never run in generalized form and prd/tasks are off-style imports. Use when
+  The decision-gated executable campaign that proved and hardened the flagship founder chain
+  (market-validation → build-options → prd → tasks). Phases 0-3 executed 2026-07-02 (template
+  rescue, proving runs, prd/tasks rewrite, site truth-up) — the skill remains the record and the
+  playbook for regressions or a future re-run. Use when
   a maintainer says "run the proving run", "prove the workflow scripts", "harden the founder chain",
   "is the flagship chain fixed", "rewrite prd/tasks", "genericize agent-browser", "fix the site
   oversell", or asks what the current phase/status of the flagship campaign is.
@@ -15,9 +16,9 @@ You are executing a phased, decision-gated campaign on the repo's hardest live p
 **flagship chain** is the four-plugin founder pipeline `/market-validation → /build-options → /prd
 → /tasks` (handoffs pass file paths, never inline content). Its execution end is unproven: the two
 **Workflow scripts** (JS files run by Claude Code's `Workflow({scriptPath, args})` tool, which
-orchestrates sub-agents) are self-declared **"syntax-checked only — its first real invocation is
-its proving run"**, and `prd`/`tasks` are off-style external imports. A **proving run** = the first
-real execution, judged only by measurable observations.
+orchestrates sub-agents) were self-declared **"syntax-checked only"** until the 2026-07-02
+proving runs, and `prd`/`tasks` were off-style external imports until the same-day rewrite. A
+**proving run** = the first real execution, judged only by measurable observations.
 
 **Announce at start:** "Running the flagship-chain campaign — current phase status below; every
 gate is measured (exit codes, counts, shapes), never judged by eye."
@@ -34,10 +35,10 @@ gate is measured (exit codes, counts, shapes), never judged by eye."
 
 | Phase | What | Status | Gate |
 |---|---|---|---|
-| 0 | Template rescue + gitignore fix | **DONE 2026-07-02, awaiting operator commit** | `gate.sh phase0` → exit 0 |
-| 1 | Proving runs of both Workflow scripts | OPEN — never executed | `gate.sh phase1 <r.json> <b.json>` → exit 0 |
-| 2 | Rewrite prd/tasks into house style + genericize agent-browser | OPEN — licensed by operator 2026-07-02 | measurable criteria below |
-| 3 | Site truth-up (docs/index.html oversell) | OPEN — **operator-gated** | strings removed + fs-release-and-publish gate |
+| 0 | Template rescue + gitignore fix | **DONE — committed `648d304`, pushed 2026-07-02** | `gate.sh phase0` → exit 0 ✓ |
+| 1 | Proving runs of both Workflow scripts | **EXECUTED 2026-07-02** (minimum-honest scale, real topic): 1A passed all expected observations (4/4 angles, 24 curated/24 survived, shape+args ✓); 1B ran end-to-end and CAUGHT ledger entry 9 (silent skeptic-verdict drop) — fixed by-construction, stress-test leg re-run | `gate.sh phase1 <r.json> <b.json>` → exit 0 |
+| 2 | Rewrite prd/tasks into house style + genericize agent-browser | **DONE 2026-07-02, uncommitted** — all 9 criteria pass (independent acceptance agent) | measurable criteria below ✓ |
+| 3 | Site truth-up (docs/index.html oversell) | **DONE 2026-07-02, uncommitted** (operator un-gated in-session; 3 maintainer-tooling cards added; site-checks.sh green) | strings removed ✓ + fs-release-and-publish gate |
 
 ## When NOT to use this skill
 
@@ -60,23 +61,12 @@ plugin `.gitignore` line `*.html` swallowed it, so `build_matrix.py` (which hard
 surviving copy was rescued from the mutable plugin cache into the repo, and `.gitignore` gained the
 negation `!assets/matrix.template.html`. Full history: **fs-failure-archaeology** (ledger #1).
 
-**Current uncommitted state** (verify with read-only `git status --short` at repo root — ALL
-seven entries below are intentional 2026-07-02 handoff work; none is contamination):
-```
- M .claude-plugin/marketplace.json                         # registers the 3 skill-* plugins
- M plugins/build-options/.gitignore                        # Phase-0 rescue negation
-?? .claude/                                                # the fs- handoff library
-?? plugins/build-options/assets/matrix.template.html       # Phase-0 rescued template
-?? plugins/skill-freshness-watch/                          # public-plugin subset
-?? plugins/skill-release-gate/                             #   (authored 2026-07-02)
-?? plugins/skill-style-guide/                              #
-```
-HEAD is `2e4c9dd`. The marketplace.json edit and the three `plugins/skill-*/` dirs must be
-committed TOGETHER: the manifest references `./plugins/skill-*` sources, so committing the
-manifest without the dirs (or restoring the manifest diff as "unexplained") breaks every
-installer on the live-publishing master.
+**State:** committed as `648d304` and pushed 2026-07-02 (the handoff library + 3 skill-*
+plugins + marketplace registration rode the same commit — the manifest references
+`./plugins/skill-*` sources, so they had to ship together on the live-publishing master).
 
-**Your job for Phase 0:** run the gate, then get the operator to commit.
+**Your job for Phase 0 now:** it's a guard, not a task — run the gate after any change touching
+build-options assets or gitignores.
 ```bash
 .claude/skills/fs-flagship-chain-campaign/scripts/gate.sh phase0
 ```
@@ -261,10 +251,11 @@ Re-verify before trusting:
 - Test counts (9/6/5): `gate.sh phase0` — it embeds all three suites.
 - Workflow return shapes: `grep -n "^return {" plugins/market-validation/assets/research-workflow.js
   plugins/build-options/assets/build-options-workflow.js` (lines 146 and 129 as of 2026-07-02).
-- "syntax-checked only" admissions still present: `grep -rn "syntax-checked only" plugins/*/SKILL.md`
-  (2 hits until Phase 1 promotes).
-- agent-browser count: `grep -rc "agent-browser" plugins/tasks/SKILL.md` (22 until Phase 2).
-- Site oversell strings: `grep -n "~0 tokens\|runs itself weekly" docs/index.html` (3 hits until Phase 3).
+- honesty admissions graduated: `grep -rln "syntax-checked only" plugins/*/SKILL.md` matches ONLY
+  skill-style-guide (which teaches the convention) since the 2026-07-02 promotion — market-validation
+  and build-options now read "proven on 2026-07-02"; the spec records the evidence.
+- agent-browser count: `grep -rc "agent-browser" plugins/tasks/SKILL.md` (1 since the 2026-07-02 rewrite; >2 = regression).
+- Site oversell strings: `grep -n "~0 tokens\|runs itself weekly" docs/index.html` (0 since 2026-07-02; any hit = regression).
 - Gate script self-test: it was verified 2026-07-02 to PASS on real phase-0 state and to FAIL on
   synthetic bad phase-1 JSON (leaked `drop` verdict; empty scores). If you edit it, re-run both directions.
 - Reference-run cost figures (~1.5M tokens/~38 agents/~50 min): sourced from

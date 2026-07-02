@@ -1,8 +1,9 @@
 # founder-skills
 
-**A judgment layer for Claude Code** — twelve skills that sit above Anthropic's execution primitives
+**A judgment layer for Claude Code** — fifteen skills that sit above Anthropic's execution primitives
 and tell the model *when* to plan, *which model* to use, and *how* to structure work across a session.
-Four groups: session calibration, Fable 5 orchestration, the founder workflow chain, and craft.
+Five groups: session calibration, Fable 5 orchestration, the founder workflow chain, craft, and
+maintainer tooling.
 
 Started as a founder's research-to-spec chain. Generalized into a starter package for any builder,
 developer, or researcher using Claude Code with Fable 5.
@@ -87,13 +88,17 @@ Install specific skills:
 /plugin install fable-loop-design@founder-skills
 /plugin install tufte-viz@founder-skills
 /plugin install ecosystem-planning@founder-skills
+/plugin install skill-style-guide@founder-skills
+/plugin install skill-release-gate@founder-skills
+/plugin install skill-freshness-watch@founder-skills
 ```
 
-Or install all twelve:
+Or install all fifteen:
 ```bash
 for skill in session-start effort market-validation build-options prd tasks \
              fable-orchestrated-feature-dev fable-repo-audit fable-org-audit \
-             fable-loop-design tufte-viz ecosystem-planning; do
+             fable-loop-design tufte-viz ecosystem-planning \
+             skill-style-guide skill-release-gate skill-freshness-watch; do
   /plugin install ${skill}@founder-skills
 done
 ```
@@ -164,6 +169,9 @@ Prevents an hour of wrong-direction work.
 | **fable-loop-design** | `/fable-loop-design` | Design self-correction loops (rubric + independent verifier sub-agent) and cross-session memory (fail → investigate → verify → distill → consult). |
 | **tufte-viz** | `/tufte-viz` | Ideate and critique data visualizations on Tufte's principles. Ships 4 working HTML demos as calibration examples. |
 | **ecosystem-planning** | `/ecosystem-planning` | One approvable plan across ≥3 repos: verified facts, parallel Explore/Plan agents, advisor review, re-runnable definition of done. |
+| **skill-style-guide** | `/skill-style-guide` | House style for skill-marketplace SKILL.md/README files: 16-item conformance checklist, calibrated against your own golden set. Reference-and-checklist skill. |
+| **skill-release-gate** | `/skill-release-gate` | Local pre-push gate for a live-publishing marketplace: test suites, manifest JSON parse, sanitization grep, gitignore-swallow check, version-bump and cache-desync discipline. |
+| **skill-freshness-watch** | `/skill-freshness-watch` | Read-only drift sweep for a published marketplace: model IDs, manifest versions, beta claims, cited-URL liveness, installed cache, sibling repos. |
 
 ---
 

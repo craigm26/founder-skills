@@ -60,9 +60,12 @@ skill then turns that into `prd.json`. Surface all artifacts to the user (SendUs
 `decision-data.json`, `<slug>.html` (+ `.pdf`/`.pptx` if produced), and the PRD for the chosen option.
 
 ## Known limitations (keep your honesty consistent)
-- **The workflow (`build-options-workflow.js`) is syntax-checked only — its first real invocation is its
-  proving run.** Confirm `args` (context/criteria/lenses) flow into the agents and the returned
-  `{options, criteria}` shape matches what Phase 2 consumes before trusting the output.
+- **The workflow (`build-options-workflow.js`) was proven on 2026-07-02** (see
+  `docs/superpowers/specs/2026-07-02-flagship-campaign-execution.md`): a real run (3 lenses,
+  3 judges, 3 skeptics) threaded `args` and returned the documented shape — and caught a silent
+  skeptic-verdict drop (verdicts joined on a model-echoed optionId; every mismatch defaulted to
+  `survive/[]`). Fixed the same day by binding verdicts to options by construction. Lesson: join
+  sub-agent outputs on keys YOU control, and treat an empty `killerRisks` on a top option as suspect.
 - **The `prd` handoff is described, not yet exercised** — confirm the PRD lands in `/tasks/` the first time.
 - **LLM judges cluster scores** → frequent "too close to call." If the matrix doesn't discriminate, sharpen
   the criteria **weights** (the lever), not the method.

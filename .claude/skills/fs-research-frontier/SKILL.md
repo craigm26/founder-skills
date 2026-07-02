@@ -86,7 +86,7 @@ measurement would be, as far as we know (UNVERIFIED — no survey done), first o
    Measured costs are the natural completion of that doctrine — the repo's own rules
    already demand this front.
 2. **The admission convention exists**: both workflow skills already carry the line
-   "syntax-checked only — its first real invocation is its proving run"
+   "syntax-checked only — its first real invocation is its proving run" (both graduated to "proven on 2026-07-02" via campaign Phase 1 — an early measured-not-claimed win)
    (`plugins/market-validation/SKILL.md:93`, `plugins/build-options/SKILL.md:63`).
    "measured on N=1 run, artifact X" is the same honest register.
 3. **Test harnesses exist** (pytest 6 + 9, node:test 5 — see `fs-toolchain-and-tests`),

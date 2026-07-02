@@ -37,7 +37,7 @@ Two things make this repo unusual to maintain. Internalize both before touching 
 
 ```
 founder-skills/
-├── .claude-plugin/marketplace.json   # the marketplace manifest — 15 plugin entries (12 committed + 3 uncommitted skill-*)
+├── .claude-plugin/marketplace.json   # the marketplace manifest — 15 plugin entries
 ├── .claude/skills/fs-*/              # THIS handoff library (repo-internal source of truth)
 ├── plugins/<name>/                   # 15 self-contained plugins (the product; 3 are uncommitted)
 │   ├── .claude-plugin/plugin.json    #   per-plugin manifest
@@ -65,7 +65,7 @@ Definitions (used across all fs- skills):
 | **operator** | Craig Merry, the repo owner. Approves specs; runs all mutating git commands. Assistants never `git add/commit/push`. |
 | **fs- skills** | This 15-skill handoff library in `.claude/skills/`, distinct from the published plugins. Its curated 3-plugin public subset (`skill-style-guide`, `skill-release-gate`, `skill-freshness-watch`) was authored and registered in marketplace.json on 2026-07-02 — **uncommitted**, awaiting operator commit (operator decision 2026-07-02). |
 
-## The skill groups (12 committed plugins + 3 uncommitted skill-* plugins)
+## The skill groups (15 plugins)
 
 | Group | Plugins | Job |
 |---|---|---|
@@ -99,7 +99,7 @@ Not all plugins are equal. When writing or judging skill prose:
 |---|---|---|
 | **Golden four** (the house style IS extracted from these) | `market-validation` (117 lines), `build-options` (78), `ecosystem-planning` (172), `fable-org-audit` (227) | Copy structure, voice, frontmatter, closers from these ONLY. |
 | Conforming | `session-start`, `effort`, `fable-orchestrated-feature-dev`, `fable-repo-audit`, `fable-loop-design` | House style, fine as secondary examples. |
-| **Off-style — never copy** | `prd` (200 lines), `tasks` (480 lines) — external import: different voice, emoji ❌/✅, hard unstated `agent-browser` CLI dependency. `tufte-viz` — nonconforming `\|` literal-block frontmatter instead of `>-`. | Rewrite of prd/tasks into house style is operator-licensed (2026-07-02) but not done. |
+| **Off-style — never copy** | `tufte-viz` — nonconforming `\|` literal-block frontmatter instead of `>-`. (`prd`/`tasks` were in this tier until 2026-07-02; both were rewritten to house style in campaign Phase 2 and are now conforming.) | Only tufte-viz remains off-style. |
 
 The written style rules live in `fs-skill-style-guide`. Frontmatter contract, directory
 contract, and the per-plugin README template live in `fs-plugin-anatomy`.
@@ -116,8 +116,8 @@ duplicate its detail. Headline state as of 2026-07-02:
 | 2 | README test commands fail verbatim (PEP-668 host Python) | Open — use the venv procedure in `fs-toolchain-and-tests` |
 | 3 | JS suite absent from README; only the glob form runs | Open — `node --test 'tests/js/*.test.mjs'` |
 | 4 | Two Workflow scripts self-declared "syntax-checked only", never proven | Open — proving run is the `fs-flagship-chain-campaign` target |
-| 5 | prd + tasks off-style with unstated agent-browser dep | Open — rewrite licensed, not executed |
-| 6 | Site oversell drift ("~0 tokens" chips ×2, "runs itself weekly") | Open — fixing needs a spec, see `fs-site-and-positioning` |
+| 5 | prd + tasks off-style with unstated agent-browser dep | Fixed 2026-07-02 — rewritten to house style, agent-browser genericized |
+| 6 | Site oversell drift ("~0 tokens" chips ×2, "runs itself weekly") | Fixed 2026-07-02 — chips honest, copy corrected, site-checks.sh green |
 | 7 | add-skill.sh hazards (schema-only validation, `rm -rf` on line ~142, cross-lists into a second marketplace) | Open — see `fs-skill-authoring` |
 | 8 | emit_atlas.py → emit_market_map.py rename; external breakage unknowable (no telemetry) | Closed-as-accepted per spec |
 
@@ -199,7 +199,7 @@ sibling from the router table.
 
 | Mistake | Fix |
 |---|---|
-| Copying style from prd/tasks/tufte-viz because they're in the repo | Only the golden four define house style |
+| Copying style from tufte-viz because it's in the repo | Only the golden four define house style (prd/tasks conform since 2026-07-02) |
 | Trusting README's `python3 -m pytest` | PEP-668 host — venv procedure in `fs-toolchain-and-tests` |
 | Pushing "small" fixes straight to master | master is LIVE; gate via `fs-change-control` + `fs-release-and-publish` |
 | Assuming the template rescue (ledger #1) is committed | It was uncommitted as of 2026-07-02; check `git status` |
@@ -220,7 +220,7 @@ ls plugins | wc -l                                               # was 15 on dis
 python3 -c 'import json; print(len(json.load(open(".claude-plugin/marketplace.json"))["plugins"]))'  # was 15 (12 at HEAD)
 # Ledger #1 rescue state (expect nothing once operator commits)
 git status --short -- plugins/build-options
-# Site oversell strings still present? (ledger #6; expect 2 and 1 until a site spec fixes them)
+# Site oversell strings still present? (ledger #6 fixed 2026-07-02; expect 0)
 grep -c '~0 tokens' docs/index.html; grep -c 'runs itself weekly' docs/index.html
 # Pages site live
 curl -s -o /dev/null -w '%{http_code}\n' https://craigm26.github.io/founder-skills/   # was 200
