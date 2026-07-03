@@ -25,7 +25,7 @@ confirmation of the default scoring criteria + weights (you can adjust; weights 
 
 ## Cost
 
-~12 agents (6 generators + 3 judges + ~3 skeptics) — roughly 300–600k tokens, well under a
+~12 agents (6 generators + 3 judges + ~3 skeptics). MEASURED 2026-07-02: a 3-lens run (9 agents) = 313,729 tokens in ~8 min; a 6-lens run lands roughly 300–600k tokens, well under a
 market-validation run.
 
 ## 60-second first run

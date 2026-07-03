@@ -14,7 +14,7 @@ Runs the proven pipeline that turns a product idea into a defensible, cited mark
 shareable artifacts. Generalized from the ShiftMate run (see `references/example-shiftmate/`).
 
 ## Before you start (state this to the user)
-- **Cost/time:** a full run is large — the reference run was **~1.5M tokens, ~38 agents, ~50 min** on a
+- **Cost/time:** MEASURED 2026-07-02: a minimum-honest run (4 default angles) = **1,134,356 tokens, 30 agents, ~20 min**; a full run is larger — the reference run was **~1.5M tokens, ~38 agents, ~50 min** on a
   4-core Pi. Confirm scope (Phase 0) before launching; this is a deliberate spend, not a quick lookup.
 - **Workflow opt-in:** Phase 1 launches the Workflow tool. That is allowed because *this skill's
   instructions tell you to call Workflow* (the tool's documented allowance) — you do not need separate
@@ -96,9 +96,9 @@ markdown evidence pack (the workflow's `report`) as the durable write-up.
   prompts and returned the documented `{ report, survivors[], competitors[], droppedCount }` shape
   (24 curated / 24 survived / 0 dropped). `args.angles` beyond the defaults is still unexercised;
   on a custom-angles run, confirm they flow into the prompts before trusting the output.
-- **The emitted market map is shape-valid; no sink's load path is verified by this skill**
-  (`references/market-map-schema.md` + `references/sinks.md`). Do not tell the user a specific
-  platform integration "works today."
+- **The emitted market map is shape-valid; a sink's load path is only proven where `references/sinks.md`
+  records a dated proof** (the PlatAtlas hosted path was proven 2026-07-02; every OTHER sink remains
+  "shape-valid, load-untested"). Do not tell the user an unproven platform integration "works today."
 - **Phase 2 (report → `deck-data.json`) is a manual seam.** No code automates it; lean hard on the golden example.
 
 ## References

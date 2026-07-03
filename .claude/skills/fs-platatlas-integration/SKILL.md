@@ -156,9 +156,15 @@ node bin/declare-loadout.mjs --org <slug> --items-file loadout.json
 ```
 
 This is the "skills-as-product" hook (operator beyond-SOTA decision #4): founder-skills
-entries appearing in a seat's Loadout with observed-use evidence. UNVERIFIED end-to-end —
-no seat has ever declared a founder-skills loadout. Treat the first declaration as its
-proving run and record what happens (see **fs-failure-archaeology** for the template).
+entries appearing in a seat's Loadout with observed-use evidence. **First declaration PROVEN
+2026-07-02** for org `platatlas`: an ingest-scope key was minted via the admin console API
+(`POST /api/orgs/:slug/api-keys`, session + `X-PlatAtlas-CSRF` from `GET /api/me`), stored at
+`~/.platatlas-platatlas-ingest.key` (environment-specific), and `declare-loadout.mjs` declared
+15 founder-skills items — the server auto-created actor
+`act_90fdfaad-1d32-4afa-9b85-e11d5bebd31c` from the key subject, and the loadout index shows
+declared 15 / observed 0 / bloat 15 (honest: the seat has pushed no traces yet, so every item
+is correctly bloat-flagged until observed use arrives). Next milestone: observed>0 via the
+seat's trace uploads.
 
 ## Part 3 — Mirror plan into workflow-atlas convention (documented, NOT executed)
 

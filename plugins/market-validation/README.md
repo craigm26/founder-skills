@@ -7,7 +7,7 @@ build/integrate brief, and a market-map graph of the competitive landscape.
 ## Before you install
 
 This is the heavyweight skill in the chain. A full run is a deliberate spend, not a quick lookup —
-the reference run was **~1.5M tokens, ~38 agents, ~50 minutes**. The skill tells you this up front
+a MEASURED minimum run (4 default angles, 30 agents) was **1,134,356 tokens in ~20 minutes** on 2026-07-02; the full-fidelity reference run was **~1.5M tokens, ~38 agents, ~50 minutes**. The skill tells you this up front
 and confirms scope before launching anything. Its core discipline is non-negotiable: every claim
 that survives into the evidence pack has a **live-verified URL**, and a counter-evidence research
 angle always runs alongside the supportive ones.
@@ -36,7 +36,7 @@ angle set determines the spend.
 
 ## Cost
 
-~1.5M tokens / ~45–60 min for a full run. Scope it down in Phase 0 (fewer angles, narrower
+Measured: 1,134,356 tokens / ~20 min for a 4-angle minimum run (2026-07-02); ~1.5M tokens / ~45–60 min for a full run. Scope it down in Phase 0 (fewer angles, narrower
 geography) for a cheaper pass.
 
 ## 60-second first run
