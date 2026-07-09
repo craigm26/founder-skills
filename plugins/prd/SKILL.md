@@ -25,7 +25,7 @@ thing) and from `/tasks` (which converts the finished PRD file into `prd.json`).
 - **No questions, no code:** this skill never calls AskUserQuestion (it *self-clarifies* from
   context) and never implements anything. It produces one document, then stops.
 - **Model routing:** authoring a PRD is planning work — it stays with the session's planning
-  model. Read the tier from `~/.claude/session-context.md` (set once via `/effort` or
+  model. Read the tier from `~/.claude/session-context.md` (set once via `/founder-effort` or
   `/session-start`); don't re-ask. Fable 5 plans and reviews and never writes implementation
   code — this document is squarely its job. The PRD's tasks get implemented downstream at the
   tier's implementation model (Opus 4.8 for complex work, Sonnet 4.6 for standard, an external

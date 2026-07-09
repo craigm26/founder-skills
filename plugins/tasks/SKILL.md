@@ -24,7 +24,7 @@ boolean check an agent can verify on its own."
 - **Autonomous mode:** do NOT ask questions. Use the PRD content and any provided context (branch
   name, output path) and generate `prd.json` immediately.
 - **Model routing:** this skill converts; it does not implement. The plan it emits is executed by
-  the implementation tier already chosen via `/effort` or `/session-start` (read
+  the implementation tier already chosen via `/founder-effort` or `/session-start` (read
   `~/.claude/session-context.md` — don't re-ask): Opus 4.8 for complex work, Sonnet 4.6 for
   standard work, or an external executor as the token-exhausted fallback. Fable 5 plans and
   reviews and never writes implementation code.

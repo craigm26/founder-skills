@@ -1,5 +1,5 @@
 ---
-name: effort
+name: founder-effort
 description: >-
   Use when declaring or checking the token budget / model tier for this session. Triggers on:
   "set effort", "how much budget do we have", "low on tokens", "use opus", "use sonnet",
@@ -7,13 +7,17 @@ description: >-
   to downgrade tier when tokens run low.
 ---
 
-# Effort
+# Founder Effort
 
 A single-question calibrator that sets the **model routing tier** for the session. Every downstream
 skill that routes to Opus vs. Sonnet vs. an external executor reads this decision. Set it once; change it if
 the situation changes mid-session.
 
-**Announce at start:** "Using effort to set the token budget tier."
+> Not to be confused with Claude Code's built-in `/effort` command, which sets the current model's
+> *reasoning effort* (thinking depth) and never changes which model runs. This skill was renamed
+> from `effort` to `founder-effort` to avoid that collision.
+
+**Announce at start:** "Using founder-effort to set the token budget tier."
 
 ---
 
@@ -55,7 +59,7 @@ Save to `~/.claude/session-context.md` (append or overwrite the `effort_tier` li
 ## Mid-session downgrade
 
 If you observe token pressure mid-session (context approaching limits, user mentions it), call
-`/effort` again and re-announce. Downstream skills will adjust routing automatically.
+`/founder-effort` again and re-announce. Downstream skills will adjust routing automatically.
 
 ---
 

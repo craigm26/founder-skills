@@ -57,7 +57,7 @@ then reviews the output against the plan. It never writes implementation code it
 produces better results than having one model do everything: the planner stays honest, the implementer
 stays focused.
 
-The `/effort` skill sets which model tier to route to. Every downstream skill respects that choice.
+The `/founder-effort` skill sets which model tier to route to. Every downstream skill respects that choice.
 
 ### 3. Token budget shapes the whole session
 
@@ -77,7 +77,7 @@ at session start, not buried inside each skill.
 Install specific skills:
 ```bash
 /plugin install session-start@founder-skills   # start here — calibrates every session
-/plugin install effort@founder-skills          # set token budget tier
+/plugin install founder-effort@founder-skills          # set token budget tier
 /plugin install market-validation@founder-skills
 /plugin install build-options@founder-skills
 /plugin install prd@founder-skills
@@ -95,7 +95,7 @@ Install specific skills:
 
 Or install all fifteen:
 ```bash
-for skill in session-start effort market-validation build-options prd tasks \
+for skill in session-start founder-effort market-validation build-options prd tasks \
              fable-orchestrated-feature-dev fable-repo-audit fable-org-audit \
              fable-loop-design tufte-viz ecosystem-planning \
              skill-style-guide skill-release-gate skill-freshness-watch; do
@@ -113,7 +113,7 @@ Every session starts with two calls:
 
 ```
 /session-start    ← three AskUserQuestion prompts: effort tier, domain, done-looks-like
-/effort           ← or skip if session-start already set it
+/founder-effort           ← or skip if session-start already set it
 ```
 
 `/session-start` reads your memory (pending items from prior sessions), asks three structured
@@ -123,7 +123,7 @@ Prevents an hour of wrong-direction work.
 ### The full chain (new product idea)
 
 ```
-/effort              →  set token budget
+/founder-effort              →  set token budget
 /session-start       →  establish goal + route to chain
 /market-validation   →  is there a real market? (cited evidence pack, ~1.5M tokens)
 /build-options       →  what should I build? (judge-panel decision matrix)
@@ -136,19 +136,19 @@ Prevents an hour of wrong-direction work.
 ### Existing feature
 
 ```
-/effort → /prd → /tasks → implement → Fable reviews
+/founder-effort → /prd → /tasks → implement → Fable reviews
 ```
 
 ### Research or analysis
 
 ```
-/effort → /market-validation (research-only mode) → artifact
+/founder-effort → /market-validation (research-only mode) → artifact
 ```
 
 ### Architecture or multi-repo scope
 
 ```
-/effort → /ecosystem-planning → /fable-orchestrated-feature-dev per workstream
+/founder-effort → /ecosystem-planning → /fable-orchestrated-feature-dev per workstream
 ```
 
 ---
@@ -158,7 +158,7 @@ Prevents an hour of wrong-direction work.
 | Skill | Invoke | What it does |
 |---|---|---|
 | **session-start** | `/session-start` | Three AskUserQuestion prompts — effort tier, domain, done-looks-like. Routes to the right skill chain. Loads memory. **Start here every session.** |
-| **effort** | `/effort` | Single-question token budget selector. Sets Opus / Sonnet / external-executor routing for the session. Can be called mid-session to downgrade. |
+| **founder-effort** | `/founder-effort` | Single-question token budget selector. Sets Opus / Sonnet / external-executor routing for the session. Can be called mid-session to downgrade. |
 | **market-validation** | `/market-validation` | Multi-angle web research with live-URL verification → cited evidence pack → Tufte HTML deck + PDF/PPTX → build brief. ~1.5M tokens for a full run. |
 | **build-options** | `/build-options` | Divergent options → independent judge-panel weighted decision matrix → adversarial stress-test → recommended build with kill criteria → hands to `prd`. |
 | **prd** | `/prd` | Self-clarify open questions, then generate a clear implementation-ready Product Requirements Document. |
@@ -179,7 +179,7 @@ Prevents an hour of wrong-direction work.
 
 `AskUserQuestion` is the tool these skills use to collect structured input. It presents typed options
 (single or multi-select) with descriptions, which produces faster and more useful answers than
-freeform prompts. The session-start and effort skills show the pattern in action.
+freeform prompts. The session-start and founder-effort skills show the pattern in action.
 
 You can wire your own AskUserQuestion calls into any Claude Code skill using the same format:
 

@@ -1,4 +1,4 @@
-# effort — the token budget calibrator
+# founder-effort — the token budget calibrator
 
 A single-question selector that sets the **model routing tier** for the session: Opus 4.8 for full
 capability, Sonnet 4.6 for most work, or plans-only with an external executor when tokens are
@@ -38,14 +38,14 @@ Negligible — one question, one announcement.
 ## 60-second first run
 
 ```
-/effort
+/founder-effort
 ```
 
 Pick a tier. The skill announces, e.g.:
 
 > Effort: Moderate. Planning → Opus 4.8, implementation → Sonnet 4.6.
 
-If you hit token pressure later, run `/effort` again and pick a lower tier.
+If you hit token pressure later, run `/founder-effort` again and pick a lower tier.
 
 ## Built on
 

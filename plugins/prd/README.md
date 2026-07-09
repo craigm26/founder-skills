@@ -29,7 +29,7 @@ smaller scope.
 ## Cost
 
 Minimal — single-model document generation, no subagents, no Workflow. Runs at your session's
-planning tier (set via `/effort`).
+planning tier (set via `/founder-effort`).
 
 ## 60-second first run
 

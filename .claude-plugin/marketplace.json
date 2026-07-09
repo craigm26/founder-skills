@@ -18,13 +18,13 @@
       "homepage": "https://github.com/craigm26/founder-skills"
     },
     {
-      "name": "effort",
-      "description": "Single-question token budget calibrator \u2014 sets the model routing tier (Opus 4.8 / Sonnet 4.6, with an external-executor fallback) for the session. Downstream skills inherit this choice.",
+      "name": "founder-effort",
+      "description": "Single-question token budget calibrator \u2014 sets the model routing tier (Opus 4.8 / Sonnet 4.6, with an external-executor fallback) for the session. Downstream skills inherit this choice. (Renamed from `effort` to avoid colliding with Claude Code\u2019s built-in /effort reasoning-effort command.)",
       "author": {
         "name": "craigm26"
       },
       "category": "productivity",
-      "source": "./plugins/effort",
+      "source": "./plugins/founder-effort",
       "homepage": "https://github.com/craigm26/founder-skills"
     },
     {

@@ -14,7 +14,7 @@ session, any executor can pick it up, and the review step grades against it.
 ## What it will ask you
 
 At most one question — "Opus or Sonnet this week?" — and only if the token-budget signal is
-genuinely ambiguous. Pair with `/effort` to make that signal explicit up front.
+genuinely ambiguous. Pair with `/founder-effort` to make that signal explicit up front.
 
 ## What it produces
 
@@ -48,4 +48,4 @@ Watch for the gate: implementation must not start until the plan file exists on 
 |---|---|---|
 | Subagents | Planner / implementer / reviewer in separate contexts | [Subagents](https://code.claude.com/docs/en/sub-agents) |
 | Model routing | Opus vs Sonnet vs external executor, by token budget | [Models overview](https://platform.claude.com/docs/en/docs/about-claude/models/overview) |
-| Skills chaining | `/effort` sets the tier; `/fable-repo-audit` output can be the plan | [Skills](https://code.claude.com/docs/en/skills) |
+| Skills chaining | `/founder-effort` sets the tier; `/fable-repo-audit` output can be the plan | [Skills](https://code.claude.com/docs/en/skills) |

@@ -22,7 +22,7 @@ generates the JSON immediately.
 ## What it produces
 
 - `prd.json` — dependency-ordered tasks, each with machine-verifiable acceptance criteria and an
-  initial `passes: false`, ready to hand to whichever implementation tier your `/effort` setting
+  initial `passes: false`, ready to hand to whichever implementation tier your `/founder-effort` setting
   chose.
 - A summary: task count, priority order, branch name, saved path.
 - A worked example ships with the plugin (`references/example-signup-fix.md`) showing a one-line

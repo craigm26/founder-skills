@@ -143,7 +143,7 @@
   <h3>2. The planner is not the coder</h3>
   <p>These skills follow one orchestration pattern: the planning model writes an in-depth plan,
   an implementation model executes it, the planner reviews the result against the plan. The
-  separation keeps the planner honest and the implementer focused. The <code>/effort</code> skill
+  separation keeps the planner honest and the implementer focused. The <code>/founder-effort</code> skill
   sets which tier each role routes to.</p>
 
   <h3>3. Token budget shapes the whole session</h3>
@@ -159,10 +159,10 @@
 
 <span class="c"># the calibrators — start here</span>
 <span class="e">/plugin install session-start@founder-skills</span>
-<span class="e">/plugin install effort@founder-skills</span>
+<span class="e">/plugin install founder-effort@founder-skills</span>
 
 <span class="c"># or all fifteen, one loop</span>
-<span class="c">for s in session-start effort market-validation build-options prd tasks \
+<span class="c">for s in session-start founder-effort market-validation build-options prd tasks \
   fable-orchestrated-feature-dev fable-repo-audit fable-org-audit \
   fable-loop-design tufte-viz ecosystem-planning \
   skill-style-guide skill-release-gate skill-freshness-watch; do</span>
@@ -228,9 +228,9 @@ Say the skill name to begin.</code></pre>
     <div class="card"><h3>session-start</h3><span class="cost">a few hundred tokens</span>
       <p><strong>You stop losing the first hour to wrong-direction work.</strong> Three questions route the session, set the model tier, and surface what last session left unfinished.</p>
       <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/session-start">Walkthrough →</a></div>
-    <div class="card"><h3>effort</h3><span class="cost">a few hundred tokens</span>
+    <div class="card"><h3>founder-effort</h3><span class="cost">a few hundred tokens</span>
       <p><strong>Your token budget becomes a decision, not an accident.</strong> One question sets the tier; maps cleanly onto the API's effort levels and Task Budgets when you need per-request control.</p>
-      <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/effort">Walkthrough →</a></div>
+      <a href="https://github.com/craigm26/founder-skills/tree/master/plugins/founder-effort">Walkthrough →</a></div>
   </div>
   <h3>Fable 5 orchestration</h3>
   <div class="cards">

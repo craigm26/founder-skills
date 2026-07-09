@@ -1,6 +1,6 @@
 {
-  "name": "effort",
-  "version": "0.2.0",
+  "name": "founder-effort",
+  "version": "0.3.0",
   "description": "Single-question token budget calibrator — sets the model routing tier (Opus 4.8 / Sonnet 4.6, with an external-executor fallback) for the session. Downstream skills inherit this choice.",
   "author": {
     "name": "Craig Merry",
